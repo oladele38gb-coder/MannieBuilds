@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   MANNIE BUILDS - Premium Editorial Design System
+   Synthesizing Dennis Snellenberg Typography & Marcelo Design X Conversion
+   ========================================================================== */
+
+:root {
+  --bg-primary: #F7F6F3;
+  --bg-secondary: #0E0E10;
+  --bg-card-light: #FFFFFF;
+  --bg-card-dark: #161619;
+  
+  --text-primary: #0E0E10;
+  --text-secondary: #5A5A62;
+  --text-muted: #8E8E98;
+  --text-inverse: #F7F6F3;
+  --text-inverse-muted: #A0A0AA;
+
+  --accent-orange: #FF6B00;
+  --accent-orange-hover: #E05E00;
+
+  --border-light: rgba(14, 14, 16, 0.1);
+  --border-subtle: rgba(14, 14, 16, 0.06);
+  --border-dark: rgba(247, 246, 243, 0.12);
+
+  --font-heading: 'Satoshi', 'General Sans', 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+
+  --ease-editorial: cubic-bezier(0.25, 1, 0.5, 1);
+  
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+/* Base Reset & Typography Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+::selection {
+  background-color: var(--accent-orange);
+  color: #FFFFFF;
+}
+
+/* Utility Containers & Margins */
+.container-editorial {
+  width: 100%;
+  max-width: 1720px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 4vw, 80px);
+  padding-right: clamp(20px, 4vw, 80px);
+}
+
+/* Button & Interactive Styling */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-editorial);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-editorial);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-primary);
+  background-color: rgba(14, 14, 16, 0.04);
+}
+
+.btn-inverse {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--accent-orange);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  border-radius: var(--radius-full);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-editorial);
+}
+
+.btn-inverse:hover {
+  background-color: #FFFFFF;
+  color: var(--bg-secondary);
+  transform: translateY(-2px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #C4C3BF;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-orange);
+}
+
+/* Custom Marquee Keyframes */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

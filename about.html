@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Mannie Builds | Oladele Emmanuel</title>
+  <meta name="description" content="About Oladele Emmanuel (Mannie Builds) — Designer, Developer & Automation Engineer based in Lagos, Nigeria."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <style>
+    body{background:#0e0e10;color:#fff}
+    /* ── About hero ── */
+    .about-hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative}
+    .about-hero-left{padding:120px 48px 80px;display:flex;flex-direction:column;justify-content:flex-end}
+    .about-hero-label{font-size:11px;font-weight:500;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:24px}
+    .about-hero-name{font-size:clamp(52px,7vw,100px);font-weight:300;letter-spacing:-.04em;line-height:.93;color:#fff;margin-bottom:36px}
+    .about-hero-name em{display:block;font-style:normal;color:rgba(255,255,255,.35)}
+    .about-hero-tagline{font-size:clamp(14px,1.4vw,18px);color:rgba(255,255,255,.55);line-height:1.7;max-width:380px;font-weight:300}
+    .about-hero-right{position:relative;overflow:hidden}
+    .about-hero-photo{width:100%;height:100%;object-fit:cover;object-position:center 5%;filter:grayscale(.08)}
+    .about-hero-photo-overlay{position:absolute;inset:0;background:linear-gradient(to right,#0e0e10 0%,transparent 30%)}
+
+    /* ── Stats strip ── */
+    .about-stats{background:#161616;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);display:grid;grid-template-columns:repeat(4,1fr)}
+    .about-stat{padding:40px 40px;border-right:1px solid rgba(255,255,255,.06)}
+    .about-stat:last-child{border-right:none}
+    .stat-num{font-size:clamp(40px,5vw,72px);font-weight:300;letter-spacing:-.04em;color:#fff;line-height:1;margin-bottom:8px}
+    .stat-label{font-size:13px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+
+    /* ── Bio section ── */
+    .about-bio{padding:100px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;background:#0e0e10;border-top:1px solid rgba(255,255,255,.06)}
+    .about-bio-title{font-size:clamp(28px,4vw,56px);font-weight:300;letter-spacing:-.04em;line-height:1.1;color:#fff}
+    .about-bio-body{display:flex;flex-direction:column;gap:24px}
+    .about-bio-para{font-size:16px;color:rgba(255,255,255,.55);line-height:1.8;font-weight:300}
+
+    /* ── Skills ── */
+    .about-skills{padding:0 48px 100px;background:#0e0e10}
+    .about-skills-label{font-size:11px;font-weight:500;letter-spacing:.12em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:48px}
+    .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden}
+    .skill-cell{background:#0e0e10;padding:40px 36px;transition:background .3s}
+    .skill-cell:hover{background:#161616}
+    .skill-area{font-size:12px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
+    .skill-name{font-size:22px;font-weight:400;color:#fff;margin-bottom:12px;letter-spacing:-.02em}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .skill-tag{font-size:12px;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:4px 14px}
+
+    /* ── CTA ── */
+    .about-cta{background:#111;padding:80px 48px;display:flex;align-items:center;justify-content:space-between;gap:40px;border-top:1px solid rgba(255,255,255,.06)}
+    .about-cta-text{font-size:clamp(28px,4vw,56px);font-weight:300;letter-spacing:-.04em;color:#fff;line-height:1.1}
+    .about-cta-btn{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:18px 36px;font-size:15px;color:#fff;transition:background .25s,border-color .25s;white-space:nowrap;flex-shrink:0}
+    .about-cta-btn:hover{background:#FF6B00;border-color:#FF6B00}
+
+    /* ── Back link ── */
+    .about-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.4);transition:color .2s}
+    .about-back:hover{color:#fff}
+    .about-back svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none}
+
+    /* override shared reveal for dark bg */
+    .about-hero-left .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+    .about-hero-left .reveal.visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:900px){
+      .about-hero{grid-template-columns:1fr;min-height:auto}
+      .about-hero-right{height:60vw}
+      .about-hero-photo-overlay{background:linear-gradient(to top,#0e0e10 0%,transparent 50%)}
+      .about-hero-left{padding:100px 24px 60px}
+      .about-stats{grid-template-columns:1fr 1fr}
+      .about-stat{border-right:1px solid rgba(255,255,255,.06);padding:32px 24px}
+      .about-bio{grid-template-columns:1fr;padding:60px 24px;gap:40px}
+      .about-skills{padding:0 24px 60px}
+      .skills-grid{grid-template-columns:1fr 1fr}
+      .about-cta{flex-direction:column;align-items:flex-start;padding:60px 24px}
+    }
+    @media(max-width:600px){
+      .skills-grid{grid-template-columns:1fr}
+      .about-stats{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+<!-- PRELOADER / WAIT ROOM (CONCEPT A) -->
+<div id="site-preloader" class="site-preloader" aria-hidden="true">
+  <div class="preloader-content">
+    <div class="preloader-brand-box">
+      <svg class="preloader-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="mb-path mb-path-m" d="M5 8 L5 24 L7.5 24 L7.5 12.5 L11.5 20 L14.5 20 L18.5 12.5 L18.5 24 L21 24 L21 8 L18 8 L13 18 L8 8 Z" />
+        <path class="mb-path mb-path-b" d="M22 8 L22 24 L28 24 C30.5 24 32.5 22.5 32.5 20.5 C32.5 19 31.5 17.8 30 17.3 C31.2 16.8 32 15.7 32 14.5 C32 12 30.2 8 27.5 8 Z M24.5 10.5 L26.8 10.5 C28.2 10.5 29 11.3 29 12.5 C29 13.7 28.2 14.5 26.8 14.5 L24.5 14.5 Z M24.5 17 L27 17 C28.6 17 29.5 18 29.5 19.5 C29.5 21 28.6 21.5 27 21.5 L24.5 21.5 Z" />
+      </svg>
+      <div class="preloader-title">Mannie Builds</div>
+      <div class="preloader-status">Designing, Building &amp; Automating</div>
+    </div>
+  </div>
+  <div class="preloader-footer">
+    <div class="preloader-footer-left">
+      <span class="preloader-dot"></span>
+      <span class="preloader-loc">Lagos, NG &nbsp;·&nbsp; Worldwide</span>
+    </div>
+    <div class="preloader-footer-right">
+      <span class="preloader-percent" id="preloader-percent">00%</span>
+    </div>
+  </div>
+  <div class="preloader-curtain-bottom">
+    <svg viewBox="0 0 1440 180" fill="none" preserveAspectRatio="none">
+      <path d="M0,0 L1440,0 L1440,70 Q720,180 0,70 Z" fill="#0e0e10" />
+    </svg>
+  </div>
+</div>
+
+<header class="site-nav nav-dark" id="site-nav" role="banner">
+  <a href="/" class="nav-brand">Mannie Builds</a>
+  <div class="nav-right">
+    <a href="index.html#contact" class="nav-talk">Let's Talk</a>
+    <span class="nav-menu-label" aria-hidden="true">Menu</span>
+    <button class="nav-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <svg class="icon-ham" viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
+      <svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</header>
+
+<div id="menu-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <div class="overlay-body">
+    <nav class="overlay-nav">
+      <a href="work.html" class="overlay-link" data-menu-link>Work</a>
+      <a href="about.html" class="overlay-link" data-menu-link>About</a>
+      <div class="services-parent">
+        <button class="overlay-link" id="services-toggle" aria-expanded="false" aria-controls="services-submenu">Services<span class="overlay-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="overlay-sub" id="services-submenu">
+          <a href="work.html?filter=development" class="overlay-sub-link" data-menu-link>Web Development</a>
+          <a href="work.html?filter=design" class="overlay-sub-link" data-menu-link>UI/UX Design</a>
+          <a href="work.html?filter=automation" class="overlay-sub-link" data-menu-link>Automation</a>
+          <a href="index.html#services" class="overlay-sub-link" data-menu-link>Product Strategy</a>
+        </div>
+      </div>
+      <a href="process.html" class="overlay-link" data-menu-link>Process</a>
+      <a href="index.html#contact" class="overlay-link" data-menu-link>Contact</a>
+    </nav>
+    <div class="overlay-socials-col">
+      <a href="mailto:oladele4emmanuel@gmail.com" class="overlay-social-item"><span>Email</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></a>
+      <a href="https://www.instagram.com/iam._mannie?igsi=MWVnM2pwZzlwNXo1cQ%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" class="overlay-social-item"><span>Instagram</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg></span></a>
+      <a href="https://x.com/mannie116?s=11" target="_blank" rel="noreferrer" class="overlay-social-item"><span>X / Twitter</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l16 16M4 20L20 4"/></svg></span></a>
+      <a href="https://www.linkedin.com/in/emmanuel-oladele-b73136379?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" class="overlay-social-item"><span>LinkedIn</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M11 17v-4a2 2 0 014 0v4M11 10v7"/></svg></span></a>
+      <a href="https://github.com/oladele38gb-coder" target="_blank" rel="noreferrer" class="overlay-social-item"><span>GitHub</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></span></a>
+    </div>
+  </div>
+  <div class="overlay-footer">
+    <span class="overlay-footer-left">Lagos, Nigeria &nbsp;·&nbsp; Available Worldwide</span>
+    <div class="overlay-footer-right"><a href="mailto:oladele4emmanuel@gmail.com">oladele4emmanuel@gmail.com</a><span id="overlay-time">—</span></div>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="about-hero">
+  <div class="about-hero-left">
+    <a href="/" class="about-back reveal"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Back</a>
+    <span class="about-hero-label reveal">About me</span>
+    <h1 class="about-hero-name reveal">
+      Oladele<br>
+      <em>Emmanuel</em>
+    </h1>
+    <p class="about-hero-tagline reveal">Designer, Developer &amp; Automation Engineer building digital products that work beautifully and run seamlessly — based in Lagos, Nigeria.</p>
+  </div>
+  <div class="about-hero-right">
+    <img src="/images/mannie-hero-1.jpg" alt="Oladele Emmanuel — Mannie Builds" class="about-hero-photo"/>
+    <div class="about-hero-photo-overlay"></div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="about-stats">
+  <div class="about-stat"><div class="stat-num">4+</div><div class="stat-label">Years of experience</div></div>
+  <div class="about-stat"><div class="stat-num">40+</div><div class="stat-label">Products shipped</div></div>
+  <div class="about-stat"><div class="stat-num">13</div><div class="stat-label">Featured case studies</div></div>
+  <div class="about-stat"><div class="stat-num">∞</div><div class="stat-label">Problems solved</div></div>
+</div>
+
+<!-- ── BIO ── -->
+<section class="about-bio">
+  <div>
+    <h2 class="about-bio-title reveal">The intersection of design, engineering &amp; automation.</h2>
+  </div>
+  <div class="about-bio-body">
+    <p class="about-bio-para reveal">I'm Oladele Emmanuel — a digital product builder who operates at the intersection of three disciplines most professionals keep separate. I design interfaces that feel inevitable. I build systems that perform under pressure. And I automate the workflows that slow businesses down.</p>
+    <p class="about-bio-para reveal reveal-delay-1">What makes my work different is the refusal to compartmentalise. A button hover state and a backend webhook pipeline are both expressions of the same obsession: making things work exactly as they should, no compromise.</p>
+    <p class="about-bio-para reveal reveal-delay-2">I've worked with startups in fintech, health, SaaS, and e-commerce — shipping everything from 0→1 MVPs to enterprise-grade redesigns. Every engagement starts with understanding the business problem, not just the brief.</p>
+    <p class="about-bio-para reveal reveal-delay-3">Currently open to new projects, partnerships and collaborations. Based in Lagos — available worldwide.</p>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section class="about-skills">
+  <p class="about-skills-label">Areas of expertise</p>
+  <div class="skills-grid">
+    <div class="skill-cell">
+      <div class="skill-area">01 — Design</div>
+      <div class="skill-name">UI/UX Design</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Figma</span><span class="skill-tag">Design Systems</span><span class="skill-tag">Prototyping</span><span class="skill-tag">User Research</span><span class="skill-tag">Mobile UI</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-area">02 — Engineering</div>
+      <div class="skill-name">Web Development</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Next.js</span><span class="skill-tag">React</span><span class="skill-tag">TypeScript</span><span class="skill-tag">Node.js</span><span class="skill-tag">Supabase</span><span class="skill-tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-area">03 — Automation</div>
+      <div class="skill-name">Workflow Automation</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Make.com</span><span class="skill-tag">Zapier</span><span class="skill-tag">Webhooks</span><span class="skill-tag">OpenAI</span><span class="skill-tag">API Integration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="about-cta">
+  <h2 class="about-cta-text reveal">Ready to build something<br>that matters?</h2>
+  <a href="index.html#contact" class="about-cta-btn reveal reveal-delay-1">
+    Start a conversation
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</section>
+
+<script src="shared.js"></script>
+</body>
+</html>

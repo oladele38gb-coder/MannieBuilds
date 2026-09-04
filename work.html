@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Work — Mannie Builds | All Projects</title>
+  <meta name="description" content="Browse all design, development and automation projects by Oladele Emmanuel (Mannie Builds)."/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    body { background: #f0efeb; }
+    .work-page { min-height: 100vh; padding: 120px 48px 80px; }
+
+    .wp-back { display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#888;margin-bottom:32px;transition:color .2s; }
+    .wp-back:hover { color:#0e0e10; }
+    .wp-back svg { width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none; }
+
+    /* Hero */
+    .wp-hero { padding-bottom:56px;border-bottom:1px solid rgba(14,14,16,.1);margin-bottom:40px; }
+    .wp-hero-label { font-size:11px;font-weight:500;letter-spacing:.12em;color:#999;text-transform:uppercase;margin-bottom:20px;display:block; }
+    .wp-hero-title { font-size:clamp(56px,9vw,130px);font-weight:300;letter-spacing:-.05em;line-height:.9;color:#0e0e10; }
+    .wp-hero-count { font-size:14px;color:#aaa;margin-top:20px; }
+
+    /* Controls */
+    .wp-controls { display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;gap:20px;flex-wrap:wrap; }
+    .wp-filters { display:flex;gap:8px;flex-wrap:wrap; }
+    .wp-filter-btn { font-size:13px;font-weight:400;color:#666;background:rgba(14,14,16,.06);border-radius:999px;padding:8px 20px;border:1px solid transparent;transition:all .2s;cursor:pointer; }
+    .wp-filter-btn.active,.wp-filter-btn:hover:not(:disabled) { background:#0e0e10;color:#fff;border-color:#0e0e10; }
+    .wp-filter-btn:disabled { opacity:.4;cursor:not-allowed; }
+    .wp-view-toggle { display:flex;gap:4px;border:1px solid rgba(14,14,16,.15);border-radius:999px;padding:4px; }
+    .wp-view-btn { width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#888;transition:background .2s,color .2s;cursor:pointer; }
+    .wp-view-btn.active { background:#0e0e10;color:#fff; }
+    .wp-view-btn svg { width:16px;height:16px;stroke:currentColor;stroke-width:1.5;fill:none; }
+
+    /* Coming Soon state */
+    .coming-soon-banner { display:none;text-align:center;padding:80px 24px;border:1px dashed rgba(14,14,16,.15);border-radius:16px;margin-top:24px; }
+    .coming-soon-banner.visible { display:block; }
+    .coming-soon-banner h3 { font-size:28px;font-weight:300;color:#0e0e10;margin-bottom:12px;letter-spacing:-.02em; }
+    .coming-soon-banner p { font-size:15px;color:#888; }
+
+    /* LIST VIEW */
+    .wp-list { list-style:none; }
+    .wp-list.hidden-view { display:none; }
+    .wp-list-item { border-top:1px solid rgba(14,14,16,.1);position:relative;overflow:hidden; }
+    .wp-list-item:last-child { border-bottom:1px solid rgba(14,14,16,.1); }
+    .wp-list-item.hidden { display:none; }
+    .wp-list-link { display:flex;align-items:center;justify-content:space-between;padding:22px 0;transition:padding .3s;position:relative;z-index:1;text-decoration:none; }
+    .wp-list-item:hover .wp-list-link { padding:22px 8px; }
+    .wp-list-title { font-size:clamp(26px,4vw,58px);font-weight:400;letter-spacing:-.03em;color:#0e0e10;transition:color .25s;line-height:1; }
+    .wp-list-item:hover .wp-list-title { color:#FF6B00; }
+    .wp-list-meta { display:flex;align-items:center;gap:20px;flex-shrink:0; }
+    .wp-list-cat { font-size:13px;color:#888; }
+    .wp-list-year { font-size:13px;color:#bbb; }
+    .wp-list-tag { font-size:11px;color:#fff;background:#FF6B00;border-radius:999px;padding:3px 10px;letter-spacing:.04em;text-transform:uppercase; }
+    .wp-list-arrow { width:32px;height:32px;border:1px solid rgba(14,14,16,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(-6px);transition:opacity .25s,transform .25s;flex-shrink:0; }
+    .wp-list-item:hover .wp-list-arrow { opacity:1;transform:translateX(0); }
+    .wp-list-arrow svg { width:12px;height:12px;stroke:#0e0e10;stroke-width:1.5;fill:none; }
+
+    /* Hover preview — video or image */
+    .wp-list-preview { position:absolute;top:50%;right:320px;transform:translateY(-50%) scale(.88);width:320px;height:200px;border-radius:12px;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .3s,transform .35s cubic-bezier(.16,1,.3,1);z-index:2;background:#0e0e10; }
+    .wp-list-item:hover .wp-list-preview { opacity:1;transform:translateY(-50%) scale(1); }
+    .wp-list-preview img,.wp-list-preview video { width:100%;height:100%;object-fit:cover;object-position:center center;display:block; }
+
+    /* PDF badge */
+    .pdf-badge { display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#888;letter-spacing:.06em;text-transform:uppercase; }
+    .pdf-badge svg { width:12px;height:12px;stroke:#888;stroke-width:1.5;fill:none; }
+
+    /* GRID VIEW */
+    .wp-grid { display:none;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px; }
+    .wp-grid.active { display:grid; }
+    .wp-grid.hidden-view { display:none !important; }
+    .wp-grid-item { border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(14,14,16,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;display:flex;flex-direction:column; }
+    .wp-grid-item.hidden { display:none; }
+    .wp-grid-item:hover { transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.08); }
+    .wp-grid-thumb { aspect-ratio:16/10;width:100%;overflow:hidden;position:relative;background:#141416; }
+    .wp-grid-thumb img { width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1); }
+    .wp-grid-item:hover .wp-grid-thumb img { transform:scale(1.04); }
+    .wp-grid-thumb video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0;z-index:2;transition:opacity .35s ease;pointer-events:none; }
+    .wp-grid-thumb.has-video:hover img { opacity:0; }
+    .wp-grid-thumb.has-video:hover video { opacity:1; }
+
+    /* Slightly scale in video cards that have baked letterbox borders so they bleed edge-to-edge */
+    .wp-grid-thumb.scaled-fill img { transform:scale(1.18);transform-origin:center center; }
+    .wp-grid-thumb.scaled-fill video { transform:scale(1.18);transform-origin:center center; }
+    .wp-grid-item:hover .wp-grid-thumb.scaled-fill img { transform:scale(1.24); }
+    .wp-grid-item:hover .wp-grid-thumb.scaled-fill video { transform:scale(1.18); }
+    .wp-list-preview.scaled-fill img,.wp-list-preview.scaled-fill video { transform:scale(1.18);transform-origin:center center; }
+
+    /* Live autoplay hero iframe wrapper */
+    .wp-grid-iframe-wrap { position:absolute;inset:0;width:100%;height:100%;overflow:hidden;z-index:2;pointer-events:none; }
+    .wp-grid-iframe-wrap iframe { width:190%;height:190%;transform:scale(.53);transform-origin:top left;border:none;display:block;pointer-events:none; }
+
+    .wp-grid-info { padding:22px 24px 16px;flex:1; }
+    .wp-grid-title { font-size:19px;font-weight:500;letter-spacing:-.02em;color:#0e0e10;margin-bottom:8px; }
+    .wp-grid-meta { display:flex;justify-content:space-between;align-items:center; }
+    .wp-grid-cat { font-size:12px;color:#888;letter-spacing:.06em;text-transform:uppercase;font-weight:500; }
+    .wp-grid-year { font-size:12px;color:#bbb; }
+    .wp-grid-link { display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-top:1px solid rgba(14,14,16,.07);font-size:12px;font-weight:500;color:#0e0e10;background:#faf9f6;transition:background .2s,color .2s;text-decoration:none;cursor:pointer; }
+    .wp-grid-link:hover { background:#FF6B00;color:#fff; }
+    .wp-grid-link svg { width:13px;height:13px;stroke:currentColor;stroke-width:1.8;fill:none;transition:transform .2s; }
+    .wp-grid-link:hover svg { transform:translateX(3px); }
+    .wp-grid-link.inert { cursor:default;color:#888;background:#faf9f6; }
+    .wp-grid-link.inert:hover { background:#faf9f6;color:#888; }
+    .wp-grid-link.inert:hover svg { transform:none; }
+
+    /* ─── CASE STUDY MODAL (LIGHT MODE CASING) ─── */
+    .cs-modal { position:fixed;inset:0;z-index:10000;background:rgba(14,14,16,.5);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.16,1,.3,1);padding:24px 20px; }
+    .cs-modal.open { opacity:1;pointer-events:all; }
+    .cs-modal-container { width:100%;max-width:1200px;max-height:92vh;background:#fafaf8;border:1px solid rgba(14,14,16,.1);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.28),0 10px 30px rgba(0,0,0,.08);transform:translateY(24px) scale(.98);transition:transform .4s cubic-bezier(.16,1,.3,1); }
+    .cs-modal.open .cs-modal-container { transform:translateY(0) scale(1); }
+    .cs-modal-header { display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid rgba(14,14,16,.08);background:#ffffff;flex-shrink:0; }
+    .cs-modal-title-wrap { display:flex;align-items:center;gap:14px; }
+    .cs-modal-title { font-size:19px;font-weight:500;color:#0e0e10;letter-spacing:-.02em; }
+    .cs-modal-badge { font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:999px;background:rgba(255,107,0,.08);color:#e05e00;border:1px solid rgba(255,107,0,.25);font-weight:600; }
+    .cs-modal-controls { display:flex;align-items:center;gap:12px; }
+    .cs-zoom-btn,.cs-close-btn { display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;font-size:12px;font-weight:500;letter-spacing:.04em;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .15s; }
+    .cs-zoom-btn { background:#ffffff;color:#0e0e10;border:1px solid rgba(14,14,16,.15); }
+    .cs-zoom-btn:hover { background:#f0efe9;border-color:rgba(14,14,16,.25); }
+    .cs-close-btn { background:#0e0e10;color:#ffffff;border:1px solid #0e0e10; }
+    .cs-close-btn:hover { background:#FF6B00;border-color:#FF6B00; }
+    .cs-modal-body { overflow-y:auto;padding:24px 28px 32px;display:flex;flex-direction:column;gap:32px;background:#fafaf8; }
+
+    /* Desktop Browser Window Mockup (Light Theme) */
+    .cs-browser-window { width:100%;flex-shrink:0;background:#ffffff;border:1px solid rgba(14,14,16,.12);border-radius:14px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.08);display:flex;flex-direction:column; }
+    .cs-browser-bar { display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#f0eee8;border-bottom:1px solid rgba(14,14,16,.08);flex-shrink:0; }
+    .cs-browser-dots { display:flex;gap:7px; }
+    .cs-browser-dots span { width:11px;height:11px;border-radius:50%;display:inline-block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
+    .cs-dot-red { background:#ff5f56; }
+    .cs-dot-yellow { background:#ffbd2e; }
+    .cs-dot-green { background:#27c93f; }
+    .cs-browser-url-pill { background:#ffffff;border:1px solid rgba(14,14,16,.1);padding:5px 22px;border-radius:999px;font-size:12px;color:#4a4a50;letter-spacing:.02em;display:flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,.03); }
+    .cs-browser-url-pill svg { width:12px;height:12px;stroke:#777; }
+    .cs-browser-scroll-tip { font-size:11px;color:#e05e00;font-weight:500;display:flex;align-items:center;gap:6px; }
+
+    .cs-preview-stage { width:100%;height:560px;min-height:560px;flex-shrink:0;overflow-y:auto;overflow-x:hidden;background:#ffffff;position:relative;scroll-behavior:smooth;-webkit-overflow-scrolling:touch; }
+    .cs-preview-stage img { width:100%;max-width:100%;height:auto;display:block;margin:0 auto;transition:width .3s ease;cursor:zoom-in; }
+    .cs-preview-stage.is-zoomed { overflow-x:auto; }
+    .cs-preview-stage.is-zoomed img { width:160%;max-width:none;cursor:zoom-out; }
+
+    /* Case Study Narrative & Details Grid (Light Theme) */
+    .cs-details-grid { display:grid;grid-template-columns:1.2fr 1fr;gap:28px;background:#ffffff;border:1px solid rgba(14,14,16,.08);border-radius:14px;padding:28px;box-shadow:0 8px 24px rgba(0,0,0,.03); }
+    .cs-col h4 { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#e05e00;margin-bottom:8px; }
+    .cs-col p { font-size:14px;line-height:1.65;color:#4a4a50;margin-bottom:20px; }
+    .cs-col p:last-child { margin-bottom:0; }
+    .cs-meta-row { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(14,14,16,.07); }
+    .cs-meta-item span { display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:4px; }
+    .cs-meta-item strong { font-size:13px;font-weight:500;color:#0e0e10; }
+    .cs-actions { display:flex;gap:12px;margin-top:8px;flex-wrap:wrap; }
+    .cs-action-btn { display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;padding:10px 20px;border-radius:999px;text-decoration:none;transition:all .2s; }
+    .cs-action-primary { background:#0e0e10;color:#ffffff; }
+    .cs-action-primary:hover { background:#FF6B00;color:#ffffff; }
+    .cs-action-secondary { background:#ffffff;color:#0e0e10;border:1px solid rgba(14,14,16,.18); }
+    .cs-action-secondary:hover { background:#f0efe9;border-color:#0e0e10; }
+
+    /* Footer */
+    .wp-footer { border-top:1px solid rgba(14,14,16,.1);padding:32px 0 0;margin-top:80px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#aaa; }
+    .wp-footer a { color:#aaa;transition:color .2s; }
+    .wp-footer a:hover { color:#0e0e10; }
+    .wp-footer-socials { display:flex;gap:20px; }
+
+    @media(max-width:900px){
+      .work-page { padding:100px 24px 60px; }
+      .wp-grid { grid-template-columns:1fr 1fr; }
+      .wp-list-meta .wp-list-year { display:none; }
+      .wp-list-preview { display:none; }
+      .cs-details-grid { grid-template-columns:1fr; }
+    }
+    @media(max-width:600px){ .wp-grid { grid-template-columns:1fr; } .cs-meta-row { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<!-- PRELOADER / WAIT ROOM (CONCEPT A) -->
+<div id="site-preloader" class="site-preloader" aria-hidden="true">
+  <div class="preloader-content">
+    <div class="preloader-brand-box">
+      <svg class="preloader-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="mb-path mb-path-m" d="M5 8 L5 24 L7.5 24 L7.5 12.5 L11.5 20 L14.5 20 L18.5 12.5 L18.5 24 L21 24 L21 8 L18 8 L13 18 L8 8 Z" />
+        <path class="mb-path mb-path-b" d="M22 8 L22 24 L28 24 C30.5 24 32.5 22.5 32.5 20.5 C32.5 19 31.5 17.8 30 17.3 C31.2 16.8 32 15.7 32 14.5 C32 12 30.2 8 27.5 8 Z M24.5 10.5 L26.8 10.5 C28.2 10.5 29 11.3 29 12.5 C29 13.7 28.2 14.5 26.8 14.5 L24.5 14.5 Z M24.5 17 L27 17 C28.6 17 29.5 18 29.5 19.5 C29.5 21 28.6 21.5 27 21.5 L24.5 21.5 Z" />
+      </svg>
+      <div class="preloader-title">Mannie Builds</div>
+      <div class="preloader-status">Designing, Building &amp; Automating</div>
+    </div>
+  </div>
+  <div class="preloader-footer">
+    <div class="preloader-footer-left">
+      <span class="preloader-dot"></span>
+      <span class="preloader-loc">Lagos, NG &nbsp;·&nbsp; Worldwide</span>
+    </div>
+    <div class="preloader-footer-right">
+      <span class="preloader-percent" id="preloader-percent">00%</span>
+    </div>
+  </div>
+  <div class="preloader-curtain-bottom">
+    <svg viewBox="0 0 1440 180" fill="none" preserveAspectRatio="none">
+      <path d="M0,0 L1440,0 L1440,70 Q720,180 0,70 Z" fill="#0e0e10" />
+    </svg>
+  </div>
+</div>
+<!-- NAV -->
+<header class="site-nav nav-light" id="site-nav" role="banner">
+  <a href="/" class="nav-brand">Mannie Builds</a>
+  <div class="nav-right">
+    <a href="index.html#contact" class="nav-talk">Let's Talk</a>
+    <span class="nav-menu-label" aria-hidden="true">Menu</span>
+    <button class="nav-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <svg class="icon-ham" viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
+      <svg class="icon-x"   viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- MENU OVERLAY -->
+<div id="menu-overlay" role="dialog" aria-modal="true">
+  <div class="overlay-body">
+    <nav class="overlay-nav">
+      <a href="work.html" class="overlay-link" data-menu-link>Work</a>
+      <a href="about.html" class="overlay-link" data-menu-link>About</a>
+      <div class="services-parent">
+        <button class="overlay-link" id="services-toggle" aria-expanded="false" aria-controls="services-submenu">Services<span class="overlay-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="overlay-sub" id="services-submenu">
+          <a href="work.html?filter=development" class="overlay-sub-link" data-menu-link>Web Development</a>
+          <a href="work.html?filter=design" class="overlay-sub-link" data-menu-link>UI/UX Design</a>
+          <a href="work.html?filter=automation" class="overlay-sub-link" data-menu-link>Automation</a>
+          <a href="index.html#services" class="overlay-sub-link" data-menu-link>Product Strategy</a>
+        </div>
+      </div>
+      <a href="process.html" class="overlay-link" data-menu-link>Process</a>
+      <a href="index.html#contact" class="overlay-link" data-menu-link>Contact</a>
+    </nav>
+    <div class="overlay-socials-col">
+      <a href="mailto:oladele4emmanuel@gmail.com" class="overlay-social-item"><span>Email</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></a>
+      <a href="https://www.instagram.com/iam._mannie?igsi=MWVnM2pwZzlwNXo1cQ%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" class="overlay-social-item"><span>Instagram</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span></a>
+      <a href="https://x.com/mannie116?s=11" target="_blank" rel="noreferrer" class="overlay-social-item"><span>X / Twitter</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l16 16M4 20L20 4"/></svg></span></a>
+      <a href="https://www.linkedin.com/in/emmanuel-oladele-b73136379?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" class="overlay-social-item"><span>LinkedIn</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M11 17v-4a2 2 0 014 0v4M11 10v7"/></svg></span></a>
+      <a href="https://github.com/oladele38gb-coder" target="_blank" rel="noreferrer" class="overlay-social-item"><span>GitHub</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></span></a>
+    </div>
+  </div>
+  <div class="overlay-footer">
+    <span class="overlay-footer-left">Lagos, Nigeria &nbsp;·&nbsp; Available Worldwide</span>
+    <div class="overlay-footer-right"><a href="mailto:oladele4emmanuel@gmail.com">oladele4emmanuel@gmail.com</a><span id="overlay-time">—</span></div>
+  </div>
+</div>
+
+<main class="work-page">
+  <a href="/" class="wp-back"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Back home</a>
+
+  <div class="wp-hero">
+    <span class="wp-hero-label">Portfolio</span>
+    <h1 class="wp-hero-title">My Work.</h1>
+    <p class="wp-hero-count" id="work-count">12 projects — design, development &amp; more</p>
+  </div>
+
+  <div class="wp-controls">
+    <div class="wp-filters" role="tablist">
+      <button class="wp-filter-btn active" data-filter="all">All Works</button>
+      <button class="wp-filter-btn" data-filter="design">Design</button>
+      <button class="wp-filter-btn" data-filter="development">Development</button>
+      <button class="wp-filter-btn" data-filter="automation" disabled title="Coming soon">Automation</button>
+    </div>
+    <div class="wp-view-toggle">
+      <button class="wp-view-btn" data-view="list" aria-label="List view">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <button class="wp-view-btn active" data-view="grid" aria-label="Grid view">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Coming soon banner (for automation filter) -->
+  <div class="coming-soon-banner" id="coming-soon">
+    <h3>Automation projects coming soon.</h3>
+    <p>Workflow tools and pipeline builds are in documentation. Check back shortly.</p>
+  </div>
+
+  <!-- ══ LIST VIEW ══ -->
+  <ul class="wp-list hidden-view" id="list-view">
+
+    <!-- ── UI/UX DESIGN PROJECTS ── -->
+    <li class="wp-list-item" data-cat="design">
+      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="medilink">
+        <span class="wp-list-title">Medilink Health</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-design.png" alt="Medilink"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-tag">Design + Dev</span>
+          <span class="wp-list-cat">Case Study</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="design">
+      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="christ-arsenal">
+        <span class="wp-list-title">Christ Arsenal</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">UI/UX Design</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="design">
+      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="aurelia">
+        <span class="wp-list-title">Aurelia</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/aurelia.png" alt="Aurelia"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Case Study</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="design">
+      <a href="javascript:void(0)" class="wp-list-link inert-link" style="cursor:default;" onclick="return false;">
+        <span class="wp-list-title">Zafarti</span>
+        <div class="wp-list-preview">
+          <video src="assets/videos/zafarti.mp4" muted playsinline loop></video>
+        </div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Brand Video</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <!-- ── DEVELOPMENT PROJECTS ── -->
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://verra-psi.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Verra</span>
+        <div class="wp-list-preview scaled-fill">
+          <video src="assets/videos/verra.mp4" muted playsinline loop></video>
+        </div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://vsolar-orpin.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">VSolar</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/vsolar.png" alt="VSolar"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">FinTrack</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/fintrack.png" alt="FinTrack"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://jones-built.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Jones Built</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://shootlikezak.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Shoot Like Zak</span>
+        <div class="wp-list-preview scaled-fill">
+          <video src="assets/videos/shootlikezak.mp4" muted playsinline loop></video>
+        </div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="development design">
+      <a href="https://medilink-blond-eight.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Medilink — Live</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-live.png" alt="Medilink Live"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-tag">Design + Dev</span>
+          <span class="wp-list-cat">Full Product</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://lensworks-mauve.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Lensworks</span>
+        <div class="wp-list-preview scaled-fill">
+          <video src="assets/videos/lensworks.mp4" muted playsinline loop></video>
+        </div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://bloom-digital-two.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Bloom Digital</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/bloom.png" alt="Bloom Digital"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2024</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+  </ul>
+
+  <!-- ══ GRID VIEW ══ -->
+  <div class="wp-grid" id="grid-view">
+
+    <!-- Medilink Health UI/UX -->
+    <div class="wp-grid-item" data-cat="design">
+      <div class="wp-grid-thumb cs-trigger" data-cs="medilink" style="cursor:pointer;">
+        <img src="assets/thumbnails/medilink-design.png" alt="Medilink Health Design"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Medilink Health</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">UI/UX · Case Study</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="medilink">View Case Study <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Christ Arsenal UI/UX -->
+    <div class="wp-grid-item" data-cat="design">
+      <div class="wp-grid-thumb cs-trigger" data-cs="christ-arsenal" style="cursor:pointer;">
+        <img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal Design"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Christ Arsenal</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">UI/UX Design</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="christ-arsenal">View Design <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Aurelia UI/UX -->
+    <div class="wp-grid-item" data-cat="design">
+      <div class="wp-grid-thumb cs-trigger" data-cs="aurelia" style="cursor:pointer;">
+        <img src="assets/thumbnails/aurelia.png" alt="Aurelia Email Design"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Aurelia</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Email Design · Case Study</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="aurelia">View Case Study <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Zafarti Brand Video -->
+    <div class="wp-grid-item" data-cat="design">
+      <div class="wp-grid-thumb has-video">
+        <img src="assets/thumbnails/zafarti.png" alt="Zafarti"/>
+        <video src="assets/videos/zafarti.mp4" muted playsinline loop></video>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Zafarti</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Brand Video</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <span class="wp-grid-link inert">Hover to preview reel <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg></span>
+    </div>
+
+    <!-- Verra Dev -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb has-video scaled-fill">
+        <img src="assets/thumbnails/verra.png" alt="Verra"/>
+        <video src="assets/videos/verra.mp4" muted playsinline loop></video>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Verra</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://verra-psi.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- VSolar Dev (Live Autoplay Video Hero) -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb">
+        <img src="assets/thumbnails/vsolar.png" alt="VSolar" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <div class="wp-grid-iframe-wrap">
+          <iframe src="https://vsolar-orpin.vercel.app/" loading="lazy" title="VSolar" scrolling="no"></iframe>
+        </div>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">VSolar</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://vsolar-orpin.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- FinTrack Dev -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb">
+        <img src="assets/thumbnails/fintrack.png" alt="FinTrack"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">FinTrack</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Jones Built Dev (Live Autoplay Video Hero) -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb">
+        <img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <div class="wp-grid-iframe-wrap">
+          <iframe src="https://jones-built.vercel.app/" loading="lazy" title="Jones Built" scrolling="no"></iframe>
+        </div>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Jones Built</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://jones-built.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Shoot Like Zak Dev -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb has-video scaled-fill">
+        <img src="assets/thumbnails/shootlikezak.png" alt="Shoot Like Zak"/>
+        <video src="assets/videos/shootlikezak.mp4" muted playsinline loop></video>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Shoot Like Zak</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://shootlikezak.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Medilink Live Dev -->
+    <div class="wp-grid-item" data-cat="development design">
+      <div class="wp-grid-thumb">
+        <img src="assets/thumbnails/medilink-live.png" alt="Medilink Live App"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Medilink — Live</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Design + Dev</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://medilink-blond-eight.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Lensworks Dev -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb has-video scaled-fill">
+        <img src="assets/thumbnails/lensworks.png" alt="Lensworks"/>
+        <video src="assets/videos/lensworks.mp4" muted playsinline loop></video>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Lensworks</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://lensworks-mauve.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- Bloom Digital Dev -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb">
+        <img src="assets/thumbnails/bloom.png" alt="Bloom Digital"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Bloom Digital</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2024</span></div>
+      </div>
+      <a href="https://bloom-digital-two.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+  </div>
+
+  <!-- ─── CASE STUDY LIGHTBOX MODAL ─── -->
+  <div id="cs-modal" class="cs-modal" aria-hidden="true" role="dialog">
+    <div class="cs-modal-container">
+      <div class="cs-modal-header">
+        <div class="cs-modal-title-wrap">
+          <h3 id="cs-modal-title" class="cs-modal-title">Project Title</h3>
+          <span id="cs-modal-badge" class="cs-modal-badge">UI/UX Design</span>
+        </div>
+        <div class="cs-modal-controls">
+          <button class="cs-zoom-btn" id="cs-zoom-btn" aria-label="Toggle zoom view">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
+            <span id="cs-zoom-text">100% Zoom</span>
+          </button>
+          <button class="cs-close-btn" id="cs-close-btn" aria-label="Close modal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            Close
+          </button>
+        </div>
+      </div>
+      <div class="cs-modal-body">
+        <!-- Desktop Browser Mockup Frame -->
+        <div class="cs-browser-window">
+          <div class="cs-browser-bar">
+            <div class="cs-browser-dots">
+              <span class="cs-dot-red"></span>
+              <span class="cs-dot-yellow"></span>
+              <span class="cs-dot-green"></span>
+            </div>
+            <div class="cs-browser-url-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span id="cs-modal-url">design-preview.internal</span>
+            </div>
+            <div class="cs-browser-scroll-tip">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+              Scroll down to explore full landing page
+            </div>
+          </div>
+          <div class="cs-preview-stage" id="cs-stage">
+            <img id="cs-modal-img" src="" alt="" title="Click to toggle zoom / scroll to explore" />
+          </div>
+        </div>
+        <div class="cs-details-grid">
+          <div class="cs-col">
+            <h4>Overview</h4>
+            <p id="cs-modal-overview"></p>
+            <h4>The Challenge</h4>
+            <p id="cs-modal-challenge"></p>
+            <h4>Design Solution</h4>
+            <p id="cs-modal-solution"></p>
+          </div>
+          <div class="cs-col">
+            <div class="cs-meta-row" style="border-top:none;padding-top:0;margin-top:0;">
+              <div class="cs-meta-item"><span>Role</span><strong id="cs-modal-role"></strong></div>
+              <div class="cs-meta-item"><span>Timeline</span><strong id="cs-modal-timeline">2025</strong></div>
+            </div>
+            <div class="cs-meta-row">
+              <div class="cs-meta-item" style="grid-column:1/-1;"><span>Tools &amp; Deliverables</span><strong id="cs-modal-tools"></strong></div>
+            </div>
+            <div class="cs-meta-row">
+              <div class="cs-meta-item" style="grid-column:1/-1;"><span>Key Outcomes &amp; Impact</span><strong id="cs-modal-highlights"></strong></div>
+            </div>
+            <div class="cs-actions" id="cs-modal-actions"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wp-footer">
+    <span>© 2026 Mannie Builds</span>
+    <div class="wp-footer-socials">
+      <a href="https://www.instagram.com/iam._mannie?igsi=MWVnM2pwZzlwNXo1cQ%3D%3D&utm_source=qr" target="_blank">Instagram</a>
+      <a href="https://www.linkedin.com/in/emmanuel-oladele-b73136379?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank">LinkedIn</a>
+      <a href="https://x.com/mannie116?s=11" target="_blank">X</a>
+      <a href="https://github.com/oladele38gb-coder" target="_blank">GitHub</a>
+    </div>
+  </div>
+</main>
+
+<script src="shared.js"></script>
+<script>
+  /* ── Filter + View ── */
+  const params = new URLSearchParams(window.location.search);
+  let activeFilter = params.get('filter') || 'all';
+  let activeView = 'grid'; // Default view is Grid for any section
+
+  const listView   = document.getElementById('list-view');
+  const gridView   = document.getElementById('grid-view');
+  const countEl    = document.getElementById('work-count');
+  const comingSoon = document.getElementById('coming-soon');
+
+  function applyFilter(filter) {
+    activeFilter = filter;
+    const isAutomation = filter === 'automation';
+    comingSoon.classList.toggle('visible', isAutomation);
+
+    document.querySelectorAll('.wp-filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === filter);
+    });
+
+    if(isAutomation) {
+      listView.classList.add('hidden-view');
+      gridView.classList.remove('active');
+      gridView.classList.add('hidden-view');
+      countEl.textContent = 'Coming soon';
+      return;
+    }
+
+    const listItems = document.querySelectorAll('.wp-list-item');
+    const gridItems = document.querySelectorAll('.wp-grid-item');
+    let visible = 0;
+
+    listItems.forEach(el => {
+      const cats = (el.dataset.cat || '').split(' ');
+      const show = filter === 'all' || cats.includes(filter);
+      el.classList.toggle('hidden', !show);
+      if(show) visible++;
+    });
+    gridItems.forEach(el => {
+      const cats = (el.dataset.cat || '').split(' ');
+      const show = filter === 'all' || cats.includes(filter);
+      el.classList.toggle('hidden', !show);
+    });
+
+    applyView(activeView);
+
+    const labels = { all:'projects', design:'design projects', development:'development projects' };
+    countEl.textContent = visible + ' ' + (labels[filter] || 'projects');
+    history.replaceState({},'',(filter==='all'?window.location.pathname:'?filter='+filter));
+  }
+
+  function applyView(view) {
+    activeView = view;
+    document.querySelectorAll('.wp-view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+    if(view === 'list') {
+      listView.classList.remove('hidden-view');
+      gridView.classList.remove('active');
+      gridView.classList.add('hidden-view');
+    } else {
+      listView.classList.add('hidden-view');
+      gridView.classList.remove('hidden-view');
+      gridView.classList.add('active');
+    }
+  }
+
+  document.querySelectorAll('.wp-filter-btn:not(:disabled)').forEach(b =>
+    b.addEventListener('click', () => applyFilter(b.dataset.filter)));
+  document.querySelectorAll('.wp-view-btn').forEach(b =>
+    b.addEventListener('click', () => applyView(b.dataset.view)));
+
+  applyFilter(activeFilter);
+
+  /* ── Hover-video play/pause on list items ── */
+  document.querySelectorAll('.wp-list-item').forEach(item => {
+    const video = item.querySelector('video');
+    if(!video) return;
+    item.addEventListener('mouseenter', () => video.play());
+    item.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+  });
+
+  /* ── Hover-video on grid items ── */
+  document.querySelectorAll('.wp-grid-item').forEach(item => {
+    const video = item.querySelector('video');
+    if(!video) return;
+    item.addEventListener('mouseenter', () => video.play());
+    item.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+  });
+
+  /* ── Case Study Lightbox Controller ── */
+  const caseStudies = {
+    'medilink': {
+      title: 'Medilink Health',
+      badge: 'UI/UX Design · Healthcare Platform',
+      image: 'assets/thumbnails/medilink-website-full.png',
+      overview: 'Medilink is an end-to-end digital health platform designed to connect patients with verified specialist physicians, streamline appointment scheduling, and deliver secure digital consultations.',
+      challenge: 'Traditional healthcare portals suffer from cluttered, anxiety-inducing interfaces, convoluted booking steps, and high patient drop-off during provider selection.',
+      solution: 'Engineered a calm, trust-centered design system with a 3-step friction-free booking flow, comprehensive physician credential cards, transparent fee structures, and responsive patient dashboard layouts. Paired with clinical confirmation email templates optimized for critical patient adherence.',
+      role: 'Lead Product & UI/UX Designer',
+      timeline: '2025',
+      tools: 'Figma, Design System & Tokens, Component Library, Interactive Prototype',
+      highlights: '+42% appointment completion rate, reduced booking friction from 7 steps to 3, unified design system across patient & doctor views.',
+      liveUrl: 'https://medilink-blond-eight.vercel.app/',
+      pdfUrl: 'assets/pdfs/medilink-case-study.pdf'
+    },
+    'christ-arsenal': {
+      title: 'Christ Arsenal',
+      badge: 'UI/UX Design · Faith & Community Platform',
+      image: 'assets/thumbnails/christ-arsenal-full.png',
+      overview: 'A modern, welcoming digital home for Christ Arsenal Church designed to engage a global congregation across live sermon broadcasting, ministry outreach, community events, and secure online giving.',
+      challenge: 'Most institutional religious websites feel dated, text-heavy, and difficult to navigate on mobile devices, leading to low attendance conversion and fragmented event discovery.',
+      solution: 'Created an uplifting, editorial aesthetic featuring warm typography, dynamic service times, a sticky live broadcast notification bar, high-clarity event discovery cards, and an intuitive two-step donation flow with instant receipt confirmation.',
+      role: 'Digital Product & Brand Designer',
+      timeline: '2025',
+      tools: 'Figma, Responsive Web Design, Editorial Typography Hierarchy, Giving Flow UX',
+      highlights: 'Mobile-first layout structure, stream-first hero section for instant live broadcast access, friction-free donation experience.',
+      liveUrl: '',
+      pdfUrl: 'assets/pdfs/christ-arsenal-website.pdf'
+    },
+    'aurelia': {
+      title: 'Aurelia',
+      badge: 'Retention & Email Design · Luxury E-Commerce',
+      image: 'assets/thumbnails/aurelia-email-full.png',
+      overview: 'Aurelia is a bespoke direct-to-consumer luxury brand. This project was centered on designing a bespoke retention email system that reflects high fashion editorial aesthetics while driving repeat purchase conversion.',
+      challenge: 'Standard promotional e-commerce emails feel spammy, overcrowded, and visually disconnected from luxury brand identities, resulting in high unsubscribe rates and low click-to-open ratios.',
+      solution: 'Designed a minimalist, high-fashion layout with generous whitespace, curated serif-and-grotesque typographic contrast, dynamic product curation grids, and subtle, tactile CTA buttons that feel editorial rather than aggressive.',
+      role: 'Email Experience & Visual Designer',
+      timeline: '2025',
+      tools: 'Figma, Responsive Email Design, Typography Scaling, Modular Content Blocks',
+      highlights: 'Curated editorial design language, mobile-optimized single-column reading flow, increased visual retention and engagement.',
+      liveUrl: '',
+      pdfUrl: 'assets/pdfs/aurelia-case-study.pdf'
+    }
+  };
+
+  const csModal     = document.getElementById('cs-modal');
+  const csTitle     = document.getElementById('cs-modal-title');
+  const csBadge     = document.getElementById('cs-modal-badge');
+  const csImg       = document.getElementById('cs-modal-img');
+  const csStage     = document.getElementById('cs-stage');
+  const csZoomBtn   = document.getElementById('cs-zoom-btn');
+  const csZoomText  = document.getElementById('cs-zoom-text');
+  const csCloseBtn  = document.getElementById('cs-close-btn');
+  const csOverview  = document.getElementById('cs-modal-overview');
+  const csChallenge = document.getElementById('cs-modal-challenge');
+  const csSolution  = document.getElementById('cs-modal-solution');
+  const csRole      = document.getElementById('cs-modal-role');
+  const csTimeline  = document.getElementById('cs-modal-timeline');
+  const csTools     = document.getElementById('cs-modal-tools');
+  const csHighlights= document.getElementById('cs-modal-highlights');
+  const csActions   = document.getElementById('cs-modal-actions');
+
+  function openCaseStudy(key) {
+    const cs = caseStudies[key];
+    if(!cs || !csModal) return;
+
+    csTitle.textContent     = cs.title;
+    csBadge.textContent     = cs.badge;
+    csImg.src               = cs.image;
+    csImg.alt               = cs.title + ' Design Preview';
+    csOverview.textContent  = cs.overview;
+    csChallenge.textContent = cs.challenge;
+    csSolution.textContent  = cs.solution;
+    csRole.textContent      = cs.role;
+    csTimeline.textContent  = cs.timeline;
+    csTools.textContent     = cs.tools;
+    csHighlights.textContent= cs.highlights;
+
+    csStage.scrollTop = 0;
+    csStage.classList.remove('is-zoomed');
+    if(csZoomText) csZoomText.textContent = '100% Zoom';
+    const urlEl = document.getElementById('cs-modal-url');
+    if(urlEl) urlEl.textContent = cs.liveUrl ? cs.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : (key + '-design-system.preview');
+
+    csActions.innerHTML = '';
+    if(cs.liveUrl) {
+      const liveBtn = document.createElement('a');
+      liveBtn.href = cs.liveUrl;
+      liveBtn.target = '_blank';
+      liveBtn.rel = 'noreferrer';
+      liveBtn.className = 'cs-action-btn cs-action-primary';
+      liveBtn.innerHTML = 'View Live Product <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10M7 17L17 7"/></svg>';
+      csActions.appendChild(liveBtn);
+    }
+    if(cs.pdfUrl) {
+      const pdfBtn = document.createElement('a');
+      pdfBtn.href = cs.pdfUrl;
+      pdfBtn.target = '_blank';
+      pdfBtn.className = 'cs-action-btn cs-action-secondary';
+      pdfBtn.innerHTML = 'Download Archive PDF <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>';
+      csActions.appendChild(pdfBtn);
+    }
+
+    csModal.classList.add('open');
+    csModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCaseStudy() {
+    if(!csModal) return;
+    csModal.classList.remove('open');
+    csModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function toggleZoom() {
+    const zoomed = csStage.classList.toggle('is-zoomed');
+    if(csZoomText) csZoomText.textContent = zoomed ? 'Fit View' : '100% Zoom';
+  }
+
+  document.querySelectorAll('.cs-trigger').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const key = el.dataset.cs;
+      if(key) openCaseStudy(key);
+    });
+  });
+
+  if(csCloseBtn) csCloseBtn.addEventListener('click', closeCaseStudy);
+  if(csZoomBtn) csZoomBtn.addEventListener('click', toggleZoom);
+  if(csImg) csImg.addEventListener('click', toggleZoom);
+
+  if(csModal) {
+    csModal.addEventListener('click', e => {
+      if(e.target === csModal) closeCaseStudy();
+    });
+  }
+
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && csModal && csModal.classList.contains('open')) {
+      closeCaseStudy();
+    }
+  });
+</script>
+</body>
+</html>

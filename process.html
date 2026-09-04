@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Process — Mannie Builds | How I Work</title>
+  <meta name="description" content="My 5-step process for designing, building and automating high-performance digital products."/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    body { background: #f0efeb; }
+    .process-page { min-height: 100vh; }
+
+    /* ── Hero ── */
+    .proc-hero { padding: 140px 48px 80px; border-bottom: 1px solid rgba(14,14,16,.1); }
+    .proc-hero-label { font-size:11px;font-weight:500;letter-spacing:.12em;color:#999;text-transform:uppercase;margin-bottom:24px;display:block; }
+    .proc-hero-title { font-size:clamp(64px,10vw,140px);font-weight:300;letter-spacing:-.05em;line-height:.88;color:#0e0e10;margin-bottom:40px; }
+    .proc-hero-sub { font-size:clamp(16px,1.8vw,22px);color:#666;max-width:600px;line-height:1.65;font-weight:300; }
+    .proc-back { display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#888;margin-bottom:40px;transition:color .2s; }
+    .proc-back:hover { color:#0e0e10; }
+    .proc-back svg { width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none; }
+
+    /* ── Steps ── */
+    .proc-steps { padding: 0 48px 80px; }
+    .proc-step { display:grid;grid-template-columns:80px 1fr 1fr;gap:0;border-top:1px solid rgba(14,14,16,.1);padding:56px 0;align-items:start;transition:background .3s;border-radius:0; }
+    .proc-step:last-child { border-bottom:1px solid rgba(14,14,16,.1); }
+    .proc-step-num { font-size:13px;color:#bbb;letter-spacing:.08em;padding-top:8px;font-weight:400; }
+    .proc-step-left { padding-right:60px; }
+    .proc-step-name { font-size:clamp(32px,4.5vw,64px);font-weight:300;letter-spacing:-.04em;line-height:1;color:#0e0e10;margin-bottom:16px; }
+    .proc-step-tagline { font-size:15px;color:#FF6B00;font-weight:500;letter-spacing:.02em; }
+    .proc-step-right { padding-top:6px; }
+    .proc-step-desc { font-size:16px;color:#555;line-height:1.75;font-weight:300;margin-bottom:28px; }
+    .proc-step-deliverables { list-style:none; }
+    .proc-step-deliverables li { font-size:14px;color:#888;padding:8px 0;border-top:1px solid rgba(14,14,16,.07);display:flex;align-items:center;gap:12px; }
+    .proc-step-deliverables li::before { content:'';width:4px;height:4px;background:#FF6B00;border-radius:50%;flex-shrink:0; }
+
+    /* ── CTA strip ── */
+    .proc-cta { background:#0e0e10;padding:80px 48px;display:flex;align-items:center;justify-content:space-between;gap:40px; }
+    .proc-cta-text { font-size:clamp(28px,4vw,52px);font-weight:300;letter-spacing:-.04em;color:#fff;line-height:1.1; }
+    .proc-cta-btn { display:inline-flex;align-items:center;gap:12px;background:#FF6B00;color:#fff;border-radius:999px;padding:18px 36px;font-size:15px;font-weight:400;transition:background .25s,transform .35s cubic-bezier(.16,1,.3,1);white-space:nowrap;flex-shrink:0; }
+    .proc-cta-btn:hover { background:#e05e00;transform:scale(1.03); }
+
+    /* ── Footer ── */
+    .proc-footer { background:#0e0e10;border-top:1px solid rgba(255,255,255,.06);padding:24px 48px;display:flex;justify-content:space-between;align-items:center; }
+    .proc-footer span { font-size:13px;color:rgba(255,255,255,.3); }
+    .proc-footer-links { display:flex;gap:20px; }
+    .proc-footer-links a { font-size:13px;color:rgba(255,255,255,.3);transition:color .2s; }
+    .proc-footer-links a:hover { color:#fff; }
+
+    @media(max-width:900px){
+      .proc-hero,.proc-steps,.proc-cta { padding-left:24px;padding-right:24px; }
+      .proc-step { grid-template-columns:48px 1fr;gap:0; }
+      .proc-step-right { grid-column:2;margin-top:24px; }
+      .proc-step-left { padding-right:0; }
+      .proc-cta { flex-direction:column;align-items:flex-start; }
+      .proc-footer { padding:24px;flex-direction:column;gap:16px;align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+<!-- PRELOADER / WAIT ROOM (CONCEPT A) -->
+<div id="site-preloader" class="site-preloader" aria-hidden="true">
+  <div class="preloader-content">
+    <div class="preloader-brand-box">
+      <svg class="preloader-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="mb-path mb-path-m" d="M5 8 L5 24 L7.5 24 L7.5 12.5 L11.5 20 L14.5 20 L18.5 12.5 L18.5 24 L21 24 L21 8 L18 8 L13 18 L8 8 Z" />
+        <path class="mb-path mb-path-b" d="M22 8 L22 24 L28 24 C30.5 24 32.5 22.5 32.5 20.5 C32.5 19 31.5 17.8 30 17.3 C31.2 16.8 32 15.7 32 14.5 C32 12 30.2 8 27.5 8 Z M24.5 10.5 L26.8 10.5 C28.2 10.5 29 11.3 29 12.5 C29 13.7 28.2 14.5 26.8 14.5 L24.5 14.5 Z M24.5 17 L27 17 C28.6 17 29.5 18 29.5 19.5 C29.5 21 28.6 21.5 27 21.5 L24.5 21.5 Z" />
+      </svg>
+      <div class="preloader-title">Mannie Builds</div>
+      <div class="preloader-status">Designing, Building &amp; Automating</div>
+    </div>
+  </div>
+  <div class="preloader-footer">
+    <div class="preloader-footer-left">
+      <span class="preloader-dot"></span>
+      <span class="preloader-loc">Lagos, NG &nbsp;·&nbsp; Worldwide</span>
+    </div>
+    <div class="preloader-footer-right">
+      <span class="preloader-percent" id="preloader-percent">00%</span>
+    </div>
+  </div>
+  <div class="preloader-curtain-bottom">
+    <svg viewBox="0 0 1440 180" fill="none" preserveAspectRatio="none">
+      <path d="M0,0 L1440,0 L1440,70 Q720,180 0,70 Z" fill="#0e0e10" />
+    </svg>
+  </div>
+</div>
+<!-- NAV -->
+<header class="site-nav nav-light" id="site-nav" role="banner">
+  <a href="/" class="nav-brand">Mannie Builds</a>
+  <div class="nav-right">
+    <a href="index.html#contact" class="nav-talk">Let's Talk</a>
+    <span class="nav-menu-label" aria-hidden="true">Menu</span>
+    <button class="nav-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <svg class="icon-ham" viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
+      <svg class="icon-x"   viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- MENU OVERLAY -->
+<div id="menu-overlay" role="dialog" aria-modal="true">
+  <div class="overlay-body">
+    <nav class="overlay-nav">
+      <a href="work.html" class="overlay-link" data-menu-link>Work</a>
+      <a href="about.html" class="overlay-link" data-menu-link>About</a>
+      <div class="services-parent">
+        <button class="overlay-link" id="services-toggle" aria-expanded="false" aria-controls="services-submenu">Services<span class="overlay-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="overlay-sub" id="services-submenu">
+          <a href="work.html?filter=development" class="overlay-sub-link" data-menu-link>Web Development</a>
+          <a href="work.html?filter=design" class="overlay-sub-link" data-menu-link>UI/UX Design</a>
+          <a href="work.html?filter=automation" class="overlay-sub-link" data-menu-link>Automation</a>
+          <a href="index.html#services" class="overlay-sub-link" data-menu-link>Product Strategy</a>
+        </div>
+      </div>
+      <a href="process.html" class="overlay-link" data-menu-link>Process</a>
+      <a href="index.html#contact" class="overlay-link" data-menu-link>Contact</a>
+    </nav>
+    <div class="overlay-socials-col">
+      <a href="mailto:oladele4emmanuel@gmail.com" class="overlay-social-item"><span>Email</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></a>
+      <a href="https://www.instagram.com/iam._mannie?igsi=MWVnM2pwZzlwNXo1cQ%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" class="overlay-social-item"><span>Instagram</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span></a>
+      <a href="https://x.com/mannie116?s=11" target="_blank" rel="noreferrer" class="overlay-social-item"><span>X / Twitter</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l16 16M4 20L20 4"/></svg></span></a>
+      <a href="https://www.linkedin.com/in/emmanuel-oladele-b73136379?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" class="overlay-social-item"><span>LinkedIn</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M11 17v-4a2 2 0 014 0v4M11 10v7"/></svg></span></a>
+      <a href="https://github.com/oladele38gb-coder" target="_blank" rel="noreferrer" class="overlay-social-item"><span>GitHub</span><span class="overlay-social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></span></a>
+    </div>
+  </div>
+  <div class="overlay-footer">
+    <span class="overlay-footer-left">Lagos, Nigeria &nbsp;·&nbsp; Available Worldwide</span>
+    <div class="overlay-footer-right"><a href="mailto:oladele4emmanuel@gmail.com">oladele4emmanuel@gmail.com</a><span id="overlay-time">—</span></div>
+  </div>
+</div>
+
+<div class="process-page">
+  <div class="proc-hero">
+    <a href="/" class="proc-back"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Back home</a>
+    <span class="proc-hero-label">How I Work</span>
+    <h1 class="proc-hero-title">The<br>Process.</h1>
+    <p class="proc-hero-sub">Every project follows a structured 5-step framework that takes ideas from concept to a live, performing product — with full transparency at every stage.</p>
+  </div>
+
+  <div class="proc-steps">
+    <div class="proc-step reveal">
+      <span class="proc-step-num">01</span>
+      <div class="proc-step-left">
+        <h2 class="proc-step-name">Discover</h2>
+        <p class="proc-step-tagline">Understanding before executing</p>
+      </div>
+      <div class="proc-step-right">
+        <p class="proc-step-desc">Deep-dive into your business goals, audience, and technical requirements. I ask the uncomfortable questions — what does success actually look like? Who is this built for? What has been tried before? The insights from this phase shape every decision that follows.</p>
+        <ul class="proc-step-deliverables">
+          <li>Strategy document &amp; goals alignment</li>
+          <li>User research &amp; persona mapping</li>
+          <li>Competitive analysis</li>
+          <li>Technical architecture scoping</li>
+          <li>Project timeline &amp; milestone plan</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="proc-step reveal">
+      <span class="proc-step-num">02</span>
+      <div class="proc-step-left">
+        <h2 class="proc-step-name">Design</h2>
+        <p class="proc-step-tagline">Craft over templates</p>
+      </div>
+      <div class="proc-step-right">
+        <p class="proc-step-desc">Premium UI design built from first principles in Figma. No templates, no generic component libraries. I build custom design systems — tokens, typography scales, spacing grids — so every screen feels like it belongs to your brand. Interactive prototypes let you feel the product before a line of code is written.</p>
+        <ul class="proc-step-deliverables">
+          <li>Custom design system &amp; component library</li>
+          <li>High-fidelity responsive screen designs</li>
+          <li>Interactive Figma prototype</li>
+          <li>Motion &amp; interaction specs</li>
+          <li>Design review &amp; revision rounds</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="proc-step reveal">
+      <span class="proc-step-num">03</span>
+      <div class="proc-step-left">
+        <h2 class="proc-step-name">Build</h2>
+        <p class="proc-step-tagline">Engineered for performance</p>
+      </div>
+      <div class="proc-step-right">
+        <p class="proc-step-desc">Clean, modular code translated directly from the Figma designs. I build with Next.js, React and TypeScript — optimised for sub-second page loads, 90+ Lighthouse scores, and zero layout shift. Accessibility, SEO metadata, and structured data are baked in from day one, not bolted on at the end.</p>
+        <ul class="proc-step-deliverables">
+          <li>Pixel-accurate frontend development</li>
+          <li>RESTful or tRPC API integration</li>
+          <li>Database design &amp; backend engineering</li>
+          <li>Authentication &amp; role-based access</li>
+          <li>90+ Lighthouse performance score</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="proc-step reveal">
+      <span class="proc-step-num">04</span>
+      <div class="proc-step-left">
+        <h2 class="proc-step-name">Automate</h2>
+        <p class="proc-step-tagline">Systems that run themselves</p>
+      </div>
+      <div class="proc-step-right">
+        <p class="proc-step-desc">Workflow automation tools that help your business run easier. Custom pipelines using Make.com, Zapier, and raw webhook architectures to eliminate repetitive manual tasks — from CRM syncing to AI-powered report generation. The goal is seamless operations, not just a working product.</p>
+        <ul class="proc-step-deliverables">
+          <li>Workflow mapping &amp; automation design</li>
+          <li>Make.com / Zapier pipeline setup</li>
+          <li>Custom webhook &amp; API integrations</li>
+          <li>AI-assisted process triggers (OpenAI)</li>
+          <li>Monitoring &amp; error-handling setup</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="proc-step reveal">
+      <span class="proc-step-num">05</span>
+      <div class="proc-step-left">
+        <h2 class="proc-step-name">Launch</h2>
+        <p class="proc-step-tagline">Live &amp; protected</p>
+      </div>
+      <div class="proc-step-right">
+        <p class="proc-step-desc">Global CDN deployment with zero-downtime rollouts. Analytics verification, structured monitoring, and full handover documentation so your team can operate the product confidently. I stay on for 30 days post-launch to monitor, optimise, and fix any edge cases that emerge in the real world.</p>
+        <ul class="proc-step-deliverables">
+          <li>Production deployment (Vercel / Railway)</li>
+          <li>Analytics &amp; conversion tracking setup</li>
+          <li>Full technical documentation</li>
+          <li>Team training &amp; handover session</li>
+          <li>30-day post-launch warranty support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="proc-cta">
+    <h2 class="proc-cta-text reveal">Ready to start?<br>Let's map out your project.</h2>
+    <a href="https://calendly.com" target="_blank" rel="noreferrer" class="proc-cta-btn reveal reveal-delay-1">
+      Book a Discovery Call
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <footer class="proc-footer">
+    <span>© 2026 Mannie Builds</span>
+    <div class="proc-footer-links">
+      <a href="https://www.instagram.com/iam._mannie?igsi=MWVnM2pwZzlwNXo1cQ%3D%3D&utm_source=qr" target="_blank">Instagram</a>
+      <a href="https://www.linkedin.com/in/emmanuel-oladele-b73136379?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank">LinkedIn</a>
+      <a href="https://x.com/mannie116?s=11" target="_blank">X</a>
+      <a href="https://github.com/oladele38gb-coder" target="_blank">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="shared.js"></script>
+</body>
+</html>
