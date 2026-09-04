@@ -200,6 +200,17 @@
     </svg>
   </div>
 </div>
+<script>
+  setTimeout(function() {
+    var p = document.getElementById('site-preloader');
+    if (p && !p.classList.contains('curtain-up')) {
+      p.classList.add('curtain-up');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      setTimeout(function(){ if(p) p.style.display = 'none'; }, 1100);
+    }
+  }, 2400);
+</script>
 <!-- NAV -->
 <header class="site-nav nav-light" id="site-nav" role="banner">
   <a href="/" class="nav-brand">Mannie Builds</a>
@@ -676,7 +687,7 @@
   </div>
 </main>
 
-<script src="shared.js"></script>
+<script type="module" src="/shared.js"></script>
 <script>
   /* ── Filter + View ── */
   const params = new URLSearchParams(window.location.search);
