@@ -12,12 +12,12 @@
   <link rel="stylesheet" href="shared.css"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <style>
-    body{background:#0e0e10;color:#fff}
+    html, body, body.about-page { background: #0e0e10 !important; color: #fff !important; }
     /* ── About hero ── */
-    .about-hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative}
-    .about-hero-left{padding:120px 48px 80px;display:flex;flex-direction:column;justify-content:flex-end}
-    .about-hero-label{font-size:11px;font-weight:500;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:24px}
-    .about-hero-name{font-size:clamp(52px,7vw,100px);font-weight:300;letter-spacing:-.04em;line-height:.93;color:#fff;margin-bottom:36px}
+    .about-hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; background: #0e0e10; }
+    .about-hero-left { padding: 120px 48px 80px; display: flex; flex-direction: column; justify-content: flex-end; background: #0e0e10; }
+    .about-hero-label { font-size: 11px; font-weight: 500; letter-spacing: .12em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 24px; }
+    .about-hero-name { font-size: clamp(52px,7vw,100px); font-weight: 300; letter-spacing: -.04em; line-height: .93; color: #fff; margin-bottom: 36px; }
     .about-hero-name em{display:block;font-style:normal;color:rgba(255,255,255,.35)}
     .about-hero-tagline{font-size:clamp(14px,1.4vw,18px);color:rgba(255,255,255,.55);line-height:1.7;max-width:380px;font-weight:300}
     .about-hero-right{position:relative;overflow:hidden}
@@ -81,7 +81,7 @@
     }
   </style>
 </head>
-<body>
+<body class="about-page" style="background-color: #0e0e10 !important; color: #ffffff !important;">
 <!-- PRELOADER / WAIT ROOM (CONCEPT A) -->
 <div id="site-preloader" class="site-preloader" aria-hidden="true">
   <div class="preloader-content">

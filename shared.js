@@ -28,7 +28,38 @@ function closeMenu(){
 if(toggleBtn && overlay) {
   toggleBtn.addEventListener('click', () => overlay.classList.contains('open') ? closeMenu() : openMenu());
 }
-menuLinks.forEach(l => l.addEventListener('click', closeMenu));
+menuLinks.forEach(l => {
+  l.addEventListener('click', () => {
+    const href = l.getAttribute('href');
+    if (!href) return;
+
+    // Pure anchor link on the current page (e.g. "#contact" or "#services")
+    if (href.startsWith('#')) {
+      closeMenu();
+      return;
+    }
+
+    try {
+      const currentUrl = new URL(window.location.href);
+      const targetUrl  = new URL(href, window.location.href);
+
+      const normalize = (p) => p.replace(/\/index\.html$/, '/').replace(/\/$/, '') || '/';
+      const currentNorm = normalize(currentUrl.pathname);
+      const targetNorm  = normalize(targetUrl.pathname);
+
+      // If staying on the exact same page, close the menu
+      if (currentNorm === targetNorm) {
+        if (targetUrl.hash || !targetUrl.search || targetUrl.search === currentUrl.search) {
+          closeMenu();
+        }
+      }
+      // If navigating to a DIFFERENT page, DO NOT call closeMenu().
+      // The menu overlay stays open so the user doesn't see the current page flash.
+    } catch(err) {
+      // Fallback
+    }
+  });
+});
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMenu(); });
 
 /* Services dropdown */
