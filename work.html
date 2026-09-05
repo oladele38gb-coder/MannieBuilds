@@ -76,24 +76,44 @@
     .wp-grid-item { border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(14,14,16,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;display:flex;flex-direction:column;position:relative; }
     @keyframes cardAttentionPulse {
       0% {
-        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.7), 0 10px 30px rgba(0,0,0,0.08);
-        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.9), 0 10px 30px rgba(0,0,0,0.08);
+        outline: 3px solid #FF6B00;
+        outline-offset: 4px;
+        transform: translateY(0);
       }
-      30% {
-        box-shadow: 0 0 0 5px rgba(255, 107, 0, 0.85), 0 24px 50px rgba(255, 107, 0, 0.32);
-        transform: translateY(-10px) scale(1.025);
+      15% {
+        box-shadow: 0 0 0 14px rgba(255, 107, 0, 0.5), 0 24px 54px rgba(255, 107, 0, 0.45);
+        outline: 3px solid #FF6B00;
+        outline-offset: 6px;
+        transform: translateY(-8px) scale(1.02);
       }
-      65% {
-        box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.6), 0 20px 42px rgba(255, 107, 0, 0.22);
-        transform: translateY(-8px) scale(1.015);
+      35% {
+        box-shadow: 0 0 0 6px rgba(255, 107, 0, 0.4), 0 18px 40px rgba(255, 107, 0, 0.3);
+        outline: 3px solid #FF6B00;
+        outline-offset: 4px;
+        transform: translateY(-4px) scale(1.01);
+      }
+      55% {
+        box-shadow: 0 0 0 12px rgba(255, 107, 0, 0.45), 0 22px 48px rgba(255, 107, 0, 0.38);
+        outline: 3px solid #FF6B00;
+        outline-offset: 5px;
+        transform: translateY(-6px) scale(1.015);
+      }
+      80% {
+        box-shadow: 0 0 0 5px rgba(255, 107, 0, 0.3), 0 14px 32px rgba(255, 107, 0, 0.22);
+        outline: 2.5px solid #FF6B00;
+        outline-offset: 3px;
+        transform: translateY(-2px) scale(1.005);
       }
       100% {
-        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0), 0 16px 36px rgba(0,0,0,0.08);
-        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0), 0 12px 28px rgba(0,0,0,0.08);
+        outline: 2px solid transparent;
+        outline-offset: 0px;
+        transform: translateY(0);
       }
     }
     .wp-grid-item.highlight-target {
-      animation: cardAttentionPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      animation: cardAttentionPulse 6.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
       z-index: 8 !important;
     }
     .card-attention-badge {
@@ -103,24 +123,24 @@
       z-index: 12;
       background: #FF6B00;
       color: #ffffff;
-      padding: 6px 14px;
+      padding: 7px 15px;
       border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       letter-spacing: 0.04em;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45);
+      gap: 7px;
+      box-shadow: 0 8px 24px rgba(255, 107, 0, 0.6);
       opacity: 0;
-      animation: badgeSlideIn 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: badgeSlideIn 6.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       pointer-events: none;
     }
-    .card-attention-badge svg { width: 12px; height: 12px; fill: currentColor; }
+    .card-attention-badge svg { width: 13px; height: 13px; fill: currentColor; }
     @keyframes badgeSlideIn {
-      0% { opacity: 0; transform: translateY(-8px) scale(0.9); }
-      15% { opacity: 1; transform: translateY(0) scale(1); }
-      75% { opacity: 1; transform: translateY(0) scale(1); }
+      0% { opacity: 0; transform: translateY(-10px) scale(0.85); }
+      10% { opacity: 1; transform: translateY(0) scale(1); }
+      85% { opacity: 1; transform: translateY(0) scale(1); }
       100% { opacity: 0; transform: translateY(-6px) scale(0.95); }
     }
     .wp-grid-item.hidden { display:none; }
@@ -767,6 +787,7 @@
 <script>
   /* ── Filter + View ── */
   const params = new URLSearchParams(window.location.search);
+  const targetHashFromUrl = window.location.hash ? window.location.hash.substring(1) : '';
   let activeFilter = params.get('filter') || 'all';
   let activeView = 'grid'; // Default view is Grid for any section
 
@@ -812,7 +833,9 @@
 
     const labels = { all:'projects', design:'design projects', development:'development projects' };
     countEl.textContent = visible + ' ' + (labels[filter] || 'projects');
-    history.replaceState({},'',(filter==='all'?window.location.pathname:'?filter='+filter));
+    const hash = targetHashFromUrl ? '#' + targetHashFromUrl : window.location.hash;
+    const query = filter === 'all' ? '' : '?filter=' + filter;
+    history.replaceState({}, '', window.location.pathname + query + hash);
   }
 
   function applyView(view) {
@@ -1026,12 +1049,16 @@
   });
 
   /* ── Direct Hash Anchor Navigation & Attention Calling ── */
-  let hashScrolled = false;
-
-  function handleHashTarget() {
-    const rawHash = window.location.hash.replace(/^#/, '');
+  function handleHashTarget(explicitHash) {
+    const rawHash = (explicitHash || targetHashFromUrl || window.location.hash || '').replace(/^#/, '').toLowerCase().trim();
     if (!rawHash) return;
 
+    // Ensure Grid View is active so card thumbnails & animations are shown
+    if (typeof applyView === 'function' && activeView !== 'grid') {
+      applyView('grid');
+    }
+
+    // Ensure filter is set to 'all' so target card isn't filtered out
     if (typeof applyFilter === 'function' && activeFilter !== 'all') {
       applyFilter('all');
     }
@@ -1039,49 +1066,80 @@
     const targetEl = document.getElementById(rawHash);
     if (!targetEl) return;
 
-    const performScroll = () => {
-      if (hashScrolled) return;
-      hashScrolled = true;
+    let hasAnimated = false;
 
-      // Ensure target is fully visible and not display:none
+    const performScroll = () => {
+      // Ensure target is fully unhidden
       targetEl.classList.remove('hidden');
 
-      // Calculate vertical centered position with header clearance
+      // Crucial: Unlock page overflow if still locked by preloader transition
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+
+      // Centered calculation relative to current viewport
       const rect = targetEl.getBoundingClientRect();
-      const targetY = rect.top + window.pageYOffset - (window.innerHeight / 2) + (rect.height / 2);
+      const currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const targetY = Math.max(0, rect.top + currentY - (window.innerHeight / 2) + (rect.height / 2));
 
       window.scrollTo({
-        top: Math.max(0, targetY),
+        top: targetY,
         behavior: 'smooth'
       });
 
-      // Trigger attention pulse animation
-      targetEl.classList.remove('highlight-target');
-      void targetEl.offsetWidth; // force browser layout reflow
-      targetEl.classList.add('highlight-target');
+      // Browser-native backup
+      try {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch(e) {}
 
-      // Create & append attention badge
-      let badge = targetEl.querySelector('.card-attention-badge');
-      if (!badge) {
-        badge = document.createElement('div');
-        badge.className = 'card-attention-badge';
-        badge.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Selected Project';
-        targetEl.appendChild(badge);
-        setTimeout(() => { badge.remove(); }, 2800);
-      }
-
-      setTimeout(() => {
+      // Trigger attention pulse animation once
+      if (!hasAnimated) {
+        hasAnimated = true;
         targetEl.classList.remove('highlight-target');
-      }, 2600);
+        void targetEl.offsetWidth; // force browser layout reflow
+        targetEl.classList.add('highlight-target');
+
+        // Create & append attention badge
+        let badge = targetEl.querySelector('.card-attention-badge');
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.className = 'card-attention-badge';
+          badge.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Selected Project';
+          targetEl.appendChild(badge);
+          setTimeout(() => { if (badge && badge.parentNode) badge.remove(); }, 6800);
+        }
+
+        setTimeout(() => {
+          targetEl.classList.remove('highlight-target');
+        }, 6800);
+      }
     };
 
-    // Run when preloader finishes or fallback after 650ms
+    // If preloader is already finished or non-existent, execute immediately
+    const preloader = document.getElementById('site-preloader');
+    const isDone = !preloader || preloader.classList.contains('curtain-up') || preloader.style.display === 'none';
+
+    if (isDone) {
+      performScroll();
+    }
+
+    // Always listen to preloader-revealed and also retry at staged intervals to guarantee execution
     window.addEventListener('preloader-revealed', performScroll, { once: true });
-    setTimeout(performScroll, 700);
+    setTimeout(performScroll, 250);
+    setTimeout(performScroll, 600);
+    setTimeout(performScroll, 1000);
+    setTimeout(performScroll, 1500);
   }
 
-  window.addEventListener('load', () => { setTimeout(handleHashTarget, 80); });
-  window.addEventListener('hashchange', () => { hashScrolled = false; handleHashTarget(); });
+  // Trigger automatically on load and hashchange
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => handleHashTarget());
+  } else {
+    handleHashTarget();
+  }
+  window.addEventListener('load', () => handleHashTarget());
+  window.addEventListener('hashchange', () => {
+    handleHashTarget(window.location.hash.replace(/^#/, ''));
+  });
 </script>
 </body>
 </html>
