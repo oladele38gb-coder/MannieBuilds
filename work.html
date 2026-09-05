@@ -74,74 +74,27 @@
     .wp-grid.active { display:grid; }
     .wp-grid.hidden-view { display:none !important; }
     .wp-grid-item { border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(14,14,16,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;display:flex;flex-direction:column;position:relative; }
-    @keyframes cardAttentionPulse {
+    @keyframes cardAttentionGlow {
       0% {
-        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.9), 0 10px 30px rgba(0,0,0,0.08);
-        outline: 3px solid #FF6B00;
-        outline-offset: 4px;
-        transform: translateY(0);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0), 0 10px 30px rgba(0,0,0,0.06);
+        border-color: rgba(14,14,16,.08);
       }
-      15% {
-        box-shadow: 0 0 0 14px rgba(255, 107, 0, 0.5), 0 24px 54px rgba(255, 107, 0, 0.45);
-        outline: 3px solid #FF6B00;
-        outline-offset: 6px;
-        transform: translateY(-8px) scale(1.02);
+      20% {
+        box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.35), 0 14px 34px rgba(255, 107, 0, 0.16);
+        border-color: rgba(255, 107, 0, 0.45);
       }
-      35% {
-        box-shadow: 0 0 0 6px rgba(255, 107, 0, 0.4), 0 18px 40px rgba(255, 107, 0, 0.3);
-        outline: 3px solid #FF6B00;
-        outline-offset: 4px;
-        transform: translateY(-4px) scale(1.01);
-      }
-      55% {
-        box-shadow: 0 0 0 12px rgba(255, 107, 0, 0.45), 0 22px 48px rgba(255, 107, 0, 0.38);
-        outline: 3px solid #FF6B00;
-        outline-offset: 5px;
-        transform: translateY(-6px) scale(1.015);
-      }
-      80% {
-        box-shadow: 0 0 0 5px rgba(255, 107, 0, 0.3), 0 14px 32px rgba(255, 107, 0, 0.22);
-        outline: 2.5px solid #FF6B00;
-        outline-offset: 3px;
-        transform: translateY(-2px) scale(1.005);
+      60% {
+        box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.28), 0 12px 30px rgba(255, 107, 0, 0.12);
+        border-color: rgba(255, 107, 0, 0.38);
       }
       100% {
-        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0), 0 12px 28px rgba(0,0,0,0.08);
-        outline: 2px solid transparent;
-        outline-offset: 0px;
-        transform: translateY(0);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0), 0 10px 30px rgba(0,0,0,0.06);
+        border-color: rgba(14,14,16,.08);
       }
     }
     .wp-grid-item.highlight-target {
-      animation: cardAttentionPulse 6.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-      z-index: 8 !important;
-    }
-    .card-attention-badge {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      z-index: 12;
-      background: #FF6B00;
-      color: #ffffff;
-      padding: 7px 15px;
-      border-radius: 999px;
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      box-shadow: 0 8px 24px rgba(255, 107, 0, 0.6);
-      opacity: 0;
-      animation: badgeSlideIn 6.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      pointer-events: none;
-    }
-    .card-attention-badge svg { width: 13px; height: 13px; fill: currentColor; }
-    @keyframes badgeSlideIn {
-      0% { opacity: 0; transform: translateY(-10px) scale(0.85); }
-      10% { opacity: 1; transform: translateY(0) scale(1); }
-      85% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-6px) scale(0.95); }
+      animation: cardAttentionGlow 4s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      z-index: 5 !important;
     }
     .wp-grid-item.hidden { display:none; }
     .wp-grid-item:hover { transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.08); }
@@ -1091,26 +1044,16 @@
         targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } catch(e) {}
 
-      // Trigger attention pulse animation once
+      // Trigger faint attention glow animation once
       if (!hasAnimated) {
         hasAnimated = true;
         targetEl.classList.remove('highlight-target');
         void targetEl.offsetWidth; // force browser layout reflow
         targetEl.classList.add('highlight-target');
 
-        // Create & append attention badge
-        let badge = targetEl.querySelector('.card-attention-badge');
-        if (!badge) {
-          badge = document.createElement('div');
-          badge.className = 'card-attention-badge';
-          badge.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Selected Project';
-          targetEl.appendChild(badge);
-          setTimeout(() => { if (badge && badge.parentNode) badge.remove(); }, 6800);
-        }
-
         setTimeout(() => {
           targetEl.classList.remove('highlight-target');
-        }, 6800);
+        }, 4200);
       }
     };
 
