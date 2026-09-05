@@ -73,8 +73,56 @@
     .wp-grid { display:none;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px; }
     .wp-grid.active { display:grid; }
     .wp-grid.hidden-view { display:none !important; }
-    .wp-grid-item { border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(14,14,16,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;display:flex;flex-direction:column;scroll-margin-top:110px; }
-    .wp-grid-item.highlight-target { box-shadow:0 0 0 2px #FF6B00,0 24px 50px rgba(0,0,0,.15) !important;transform:translateY(-6px) !important; }
+    .wp-grid-item { border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(14,14,16,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;display:flex;flex-direction:column;position:relative; }
+    @keyframes cardAttentionPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.7), 0 10px 30px rgba(0,0,0,0.08);
+        transform: translateY(0) scale(1);
+      }
+      30% {
+        box-shadow: 0 0 0 5px rgba(255, 107, 0, 0.85), 0 24px 50px rgba(255, 107, 0, 0.32);
+        transform: translateY(-10px) scale(1.025);
+      }
+      65% {
+        box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.6), 0 20px 42px rgba(255, 107, 0, 0.22);
+        transform: translateY(-8px) scale(1.015);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0), 0 16px 36px rgba(0,0,0,0.08);
+        transform: translateY(0) scale(1);
+      }
+    }
+    .wp-grid-item.highlight-target {
+      animation: cardAttentionPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      z-index: 8 !important;
+    }
+    .card-attention-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 12;
+      background: #FF6B00;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45);
+      opacity: 0;
+      animation: badgeSlideIn 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: none;
+    }
+    .card-attention-badge svg { width: 12px; height: 12px; fill: currentColor; }
+    @keyframes badgeSlideIn {
+      0% { opacity: 0; transform: translateY(-8px) scale(0.9); }
+      15% { opacity: 1; transform: translateY(0) scale(1); }
+      75% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-6px) scale(0.95); }
+    }
     .wp-grid-item.hidden { display:none; }
     .wp-grid-item:hover { transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.08); }
     .wp-grid-thumb { aspect-ratio:16/10;width:100%;overflow:hidden;position:relative;background:#141416; }
@@ -977,7 +1025,9 @@
     }
   });
 
-  /* ── Direct Hash Anchor Navigation & Highlighting ── */
+  /* ── Direct Hash Anchor Navigation & Attention Calling ── */
+  let hashScrolled = false;
+
   function handleHashTarget() {
     const rawHash = window.location.hash.replace(/^#/, '');
     if (!rawHash) return;
@@ -986,25 +1036,52 @@
       applyFilter('all');
     }
 
-    setTimeout(() => {
-      const targetEl = document.getElementById(rawHash);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        targetEl.classList.add('highlight-target');
-        setTimeout(() => {
-          targetEl.classList.remove('highlight-target');
-        }, 2200);
+    const targetEl = document.getElementById(rawHash);
+    if (!targetEl) return;
+
+    const performScroll = () => {
+      if (hashScrolled) return;
+      hashScrolled = true;
+
+      // Ensure target is fully visible and not display:none
+      targetEl.classList.remove('hidden');
+
+      // Calculate vertical centered position with header clearance
+      const rect = targetEl.getBoundingClientRect();
+      const targetY = rect.top + window.pageYOffset - (window.innerHeight / 2) + (rect.height / 2);
+
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: 'smooth'
+      });
+
+      // Trigger attention pulse animation
+      targetEl.classList.remove('highlight-target');
+      void targetEl.offsetWidth; // force browser layout reflow
+      targetEl.classList.add('highlight-target');
+
+      // Create & append attention badge
+      let badge = targetEl.querySelector('.card-attention-badge');
+      if (!badge) {
+        badge = document.createElement('div');
+        badge.className = 'card-attention-badge';
+        badge.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Selected Project';
+        targetEl.appendChild(badge);
+        setTimeout(() => { badge.remove(); }, 2800);
       }
-      if (typeof openCaseStudy === 'function' && caseStudies[rawHash]) {
-        setTimeout(() => {
-          openCaseStudy(rawHash);
-        }, 450);
-      }
-    }, 350);
+
+      setTimeout(() => {
+        targetEl.classList.remove('highlight-target');
+      }, 2600);
+    };
+
+    // Run when preloader finishes or fallback after 650ms
+    window.addEventListener('preloader-revealed', performScroll, { once: true });
+    setTimeout(performScroll, 700);
   }
 
-  window.addEventListener('load', handleHashTarget);
-  window.addEventListener('hashchange', handleHashTarget);
+  window.addEventListener('load', () => { setTimeout(handleHashTarget, 80); });
+  window.addEventListener('hashchange', () => { hashScrolled = false; handleHashTarget(); });
 </script>
 </body>
 </html>

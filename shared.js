@@ -194,6 +194,7 @@ function initPreloader() {
         preloader.classList.add('curtain-up');
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
+        window.dispatchEvent(new CustomEvent('preloader-revealed'));
 
         const heroPhoto = document.querySelector('.hero-photo');
         if (heroPhoto) {
