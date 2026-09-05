@@ -73,7 +73,8 @@
     .wp-grid { display:none;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px; }
     .wp-grid.active { display:grid; }
     .wp-grid.hidden-view { display:none !important; }
-    .wp-grid-item { border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(14,14,16,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;display:flex;flex-direction:column; }
+    .wp-grid-item { border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(14,14,16,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;display:flex;flex-direction:column;scroll-margin-top:110px; }
+    .wp-grid-item.highlight-target { box-shadow:0 0 0 2px #FF6B00,0 24px 50px rgba(0,0,0,.15) !important;transform:translateY(-6px) !important; }
     .wp-grid-item.hidden { display:none; }
     .wp-grid-item:hover { transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.08); }
     .wp-grid-thumb { aspect-ratio:16/10;width:100%;overflow:hidden;position:relative;background:#141416; }
@@ -473,7 +474,7 @@
   <div class="wp-grid" id="grid-view">
 
     <!-- 1. Zafarti Brand Video -->
-    <div class="wp-grid-item" data-cat="design">
+    <div class="wp-grid-item" id="zafarti" data-cat="design">
       <div class="wp-grid-thumb has-video">
         <img src="assets/thumbnails/zafarti.png" alt="Zafarti" loading="lazy" decoding="async"/>
         <video src="assets/videos/zafarti.mp4" poster="assets/thumbnails/zafarti.png" muted playsinline loop preload="metadata"></video>
@@ -486,7 +487,7 @@
     </div>
 
     <!-- 2. Verra Dev -->
-    <div class="wp-grid-item" data-cat="development">
+    <div class="wp-grid-item" id="verra" data-cat="development">
       <div class="wp-grid-thumb has-video scaled-fill">
         <img src="assets/thumbnails/verra.png" alt="Verra" loading="lazy" decoding="async"/>
         <video src="assets/videos/verra.mp4" poster="assets/thumbnails/verra.png" muted playsinline loop preload="metadata"></video>
@@ -499,7 +500,7 @@
     </div>
 
     <!-- 3. Medilink Health UI/UX -->
-    <div class="wp-grid-item" data-cat="design">
+    <div class="wp-grid-item" id="medilink" data-cat="design">
       <div class="wp-grid-thumb cs-trigger crop-top" data-cs="medilink" style="cursor:pointer;">
         <img src="assets/thumbnails/medilink-hero.png" alt="Medilink Health Design" loading="lazy" decoding="async"/>
       </div>
@@ -511,7 +512,7 @@
     </div>
 
     <!-- 4. Aurelia UI/UX -->
-    <div class="wp-grid-item" data-cat="design">
+    <div class="wp-grid-item" id="aurelia" data-cat="design">
       <div class="wp-grid-thumb cs-trigger crop-top" data-cs="aurelia" style="cursor:pointer;">
         <img src="assets/thumbnails/aurelia-hero.png" alt="Aurelia Email Design" loading="lazy" decoding="async"/>
       </div>
@@ -523,7 +524,7 @@
     </div>
 
     <!-- 5. Lensworks Dev -->
-    <div class="wp-grid-item" data-cat="development">
+    <div class="wp-grid-item" id="lensworks" data-cat="development">
       <div class="wp-grid-thumb has-video scaled-fill">
         <img src="assets/thumbnails/lensworks.png" alt="Lensworks" loading="lazy" decoding="async"/>
         <video src="assets/videos/lensworks.mp4" poster="assets/thumbnails/lensworks.png" muted playsinline loop preload="metadata"></video>
@@ -536,7 +537,7 @@
     </div>
 
     <!-- 6. Shoot Like Zak Dev -->
-    <div class="wp-grid-item" data-cat="development">
+    <div class="wp-grid-item" id="shootlikezak" data-cat="development">
       <div class="wp-grid-thumb has-video scaled-fill">
         <img src="assets/thumbnails/shootlikezak.png" alt="Shoot Like Zak" loading="lazy" decoding="async"/>
         <video src="assets/videos/shootlikezak.mp4" poster="assets/thumbnails/shootlikezak.png" muted playsinline loop preload="metadata"></video>
@@ -549,7 +550,7 @@
     </div>
 
     <!-- 7. Christ Arsenal UI/UX -->
-    <div class="wp-grid-item" data-cat="design">
+    <div class="wp-grid-item" id="christ-arsenal" data-cat="design">
       <div class="wp-grid-thumb cs-trigger crop-top" data-cs="christ-arsenal" style="cursor:pointer;">
         <img src="assets/thumbnails/christ-arsenal-hero.png" alt="Christ Arsenal Design" loading="lazy" decoding="async"/>
       </div>
@@ -561,7 +562,7 @@
     </div>
 
     <!-- 8. VSolar Dev (Live Autoplay Video Hero) -->
-    <div class="wp-grid-item" data-cat="development">
+    <div class="wp-grid-item" id="vsolar" data-cat="development">
       <div class="wp-grid-thumb">
         <img src="assets/thumbnails/vsolar.png" alt="VSolar" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
         <div class="wp-grid-iframe-wrap">
@@ -576,7 +577,7 @@
     </div>
 
     <!-- 9. Medilink Live Dev -->
-    <div class="wp-grid-item" data-cat="development design">
+    <div class="wp-grid-item" id="medilink-live" data-cat="development design">
       <div class="wp-grid-thumb">
         <img src="assets/thumbnails/medilink-live.png" alt="Medilink Live App" loading="lazy" decoding="async"/>
       </div>
@@ -588,7 +589,7 @@
     </div>
 
     <!-- 10. FinTrack Dev -->
-    <div class="wp-grid-item" data-cat="development">
+    <div class="wp-grid-item" id="fintrack" data-cat="development">
       <div class="wp-grid-thumb">
         <img src="assets/thumbnails/fintrack.png" alt="FinTrack" loading="lazy" decoding="async"/>
       </div>
@@ -600,7 +601,7 @@
     </div>
 
     <!-- 11. Jones Built Dev (Autoplay Video Hero with Protected Client Details) -->
-    <div class="wp-grid-item" data-cat="development">
+    <div class="wp-grid-item" id="jonesbuilt" data-cat="development">
       <div class="wp-grid-thumb">
         <div class="thumb-lock-badge">
           <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
@@ -622,7 +623,7 @@
     </div>
 
     <!-- 12. Bloom Digital Dev -->
-    <div class="wp-grid-item" data-cat="development">
+    <div class="wp-grid-item" id="bloom" data-cat="development">
       <div class="wp-grid-thumb">
         <img src="assets/thumbnails/bloom.png" alt="Bloom Digital" loading="lazy" decoding="async"/>
       </div>
@@ -975,6 +976,35 @@
       closeCaseStudy();
     }
   });
+
+  /* ── Direct Hash Anchor Navigation & Highlighting ── */
+  function handleHashTarget() {
+    const rawHash = window.location.hash.replace(/^#/, '');
+    if (!rawHash) return;
+
+    if (typeof applyFilter === 'function' && activeFilter !== 'all') {
+      applyFilter('all');
+    }
+
+    setTimeout(() => {
+      const targetEl = document.getElementById(rawHash);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetEl.classList.add('highlight-target');
+        setTimeout(() => {
+          targetEl.classList.remove('highlight-target');
+        }, 2200);
+      }
+      if (typeof openCaseStudy === 'function' && caseStudies[rawHash]) {
+        setTimeout(() => {
+          openCaseStudy(rawHash);
+        }, 450);
+      }
+    }, 350);
+  }
+
+  window.addEventListener('load', handleHashTarget);
+  window.addEventListener('hashchange', handleHashTarget);
 </script>
 </body>
 </html>
