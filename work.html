@@ -77,11 +77,10 @@
     .wp-grid-item.hidden { display:none; }
     .wp-grid-item:hover { transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.08); }
     .wp-grid-thumb { aspect-ratio:16/10;width:100%;overflow:hidden;position:relative;background:#141416; }
-    .wp-grid-thumb img { width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1); }
+    .wp-grid-thumb img { width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1);position:relative;z-index:1; }
     .wp-grid-item:hover .wp-grid-thumb img { transform:scale(1.04); }
     .wp-grid-thumb video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0;z-index:2;transition:opacity .35s ease;pointer-events:none; }
-    .wp-grid-thumb.has-video:hover img { opacity:0; }
-    .wp-grid-thumb.has-video:hover video { opacity:1; }
+    .wp-grid-thumb.has-video:hover video, .wp-grid-thumb.video-active video { opacity:1; }
 
     /* Slightly scale in video cards that have baked letterbox borders so they bleed edge-to-edge */
     .wp-grid-thumb.scaled-fill img { transform:scale(1.18);transform-origin:center center; }
@@ -295,7 +294,7 @@
     <li class="wp-list-item" data-cat="design">
       <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="medilink">
         <span class="wp-list-title">Medilink Health</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-design.png" alt="Medilink"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-design.png" alt="Medilink" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-tag">Design + Dev</span>
           <span class="wp-list-cat">Case Study</span>
@@ -308,7 +307,7 @@
     <li class="wp-list-item" data-cat="design">
       <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="christ-arsenal">
         <span class="wp-list-title">Christ Arsenal</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">UI/UX Design</span>
           <span class="wp-list-year">2025</span>
@@ -320,7 +319,7 @@
     <li class="wp-list-item" data-cat="design">
       <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="aurelia">
         <span class="wp-list-title">Aurelia</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/aurelia.png" alt="Aurelia"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/aurelia.png" alt="Aurelia" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Case Study</span>
           <span class="wp-list-year">2025</span>
@@ -333,7 +332,7 @@
       <a href="javascript:void(0)" class="wp-list-link inert-link" style="cursor:default;" onclick="return false;">
         <span class="wp-list-title">Zafarti</span>
         <div class="wp-list-preview">
-          <video src="assets/videos/zafarti.mp4" muted playsinline loop></video>
+          <video src="assets/videos/zafarti.mp4" poster="assets/thumbnails/zafarti.png" muted playsinline loop preload="metadata"></video>
         </div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Brand Video</span>
@@ -348,7 +347,7 @@
       <a href="https://verra-psi.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Verra</span>
         <div class="wp-list-preview scaled-fill">
-          <video src="assets/videos/verra.mp4" muted playsinline loop></video>
+          <video src="assets/videos/verra.mp4" poster="assets/thumbnails/verra.png" muted playsinline loop preload="metadata"></video>
         </div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Web Development</span>
@@ -361,7 +360,7 @@
     <li class="wp-list-item" data-cat="development">
       <a href="https://vsolar-orpin.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">VSolar</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/vsolar.png" alt="VSolar"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/vsolar.png" alt="VSolar" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Web Development</span>
           <span class="wp-list-year">2025</span>
@@ -373,7 +372,7 @@
     <li class="wp-list-item" data-cat="development">
       <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">FinTrack</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/fintrack.png" alt="FinTrack"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/fintrack.png" alt="FinTrack" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Web Development</span>
           <span class="wp-list-year">2025</span>
@@ -385,7 +384,7 @@
     <li class="wp-list-item" data-cat="development">
       <a href="https://jones-built.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Jones Built</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Web Development</span>
           <span class="wp-list-year">2025</span>
@@ -398,7 +397,7 @@
       <a href="https://shootlikezak.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Shoot Like Zak</span>
         <div class="wp-list-preview scaled-fill">
-          <video src="assets/videos/shootlikezak.mp4" muted playsinline loop></video>
+          <video src="assets/videos/shootlikezak.mp4" poster="assets/thumbnails/shootlikezak.png" muted playsinline loop preload="metadata"></video>
         </div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Web Development</span>
@@ -411,7 +410,7 @@
     <li class="wp-list-item" data-cat="development design">
       <a href="https://medilink-blond-eight.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Medilink — Live</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-live.png" alt="Medilink Live"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-live.png" alt="Medilink Live" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-tag">Design + Dev</span>
           <span class="wp-list-cat">Full Product</span>
@@ -425,7 +424,7 @@
       <a href="https://lensworks-mauve.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Lensworks</span>
         <div class="wp-list-preview scaled-fill">
-          <video src="assets/videos/lensworks.mp4" muted playsinline loop></video>
+          <video src="assets/videos/lensworks.mp4" poster="assets/thumbnails/lensworks.png" muted playsinline loop preload="metadata"></video>
         </div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Web Development</span>
@@ -438,7 +437,7 @@
     <li class="wp-list-item" data-cat="development">
       <a href="https://bloom-digital-two.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Bloom Digital</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/bloom.png" alt="Bloom Digital"/></div>
+        <div class="wp-list-preview"><img src="assets/thumbnails/bloom.png" alt="Bloom Digital" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-cat">Web Development</span>
           <span class="wp-list-year">2024</span>
@@ -455,7 +454,7 @@
     <!-- Medilink Health UI/UX -->
     <div class="wp-grid-item" data-cat="design">
       <div class="wp-grid-thumb cs-trigger" data-cs="medilink" style="cursor:pointer;">
-        <img src="assets/thumbnails/medilink-design.png" alt="Medilink Health Design"/>
+        <img src="assets/thumbnails/medilink-design.png" alt="Medilink Health Design" loading="lazy" decoding="async"/>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Medilink Health</div>
@@ -467,7 +466,7 @@
     <!-- Christ Arsenal UI/UX -->
     <div class="wp-grid-item" data-cat="design">
       <div class="wp-grid-thumb cs-trigger" data-cs="christ-arsenal" style="cursor:pointer;">
-        <img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal Design"/>
+        <img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal Design" loading="lazy" decoding="async"/>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Christ Arsenal</div>
@@ -479,7 +478,7 @@
     <!-- Aurelia UI/UX -->
     <div class="wp-grid-item" data-cat="design">
       <div class="wp-grid-thumb cs-trigger" data-cs="aurelia" style="cursor:pointer;">
-        <img src="assets/thumbnails/aurelia.png" alt="Aurelia Email Design"/>
+        <img src="assets/thumbnails/aurelia.png" alt="Aurelia Email Design" loading="lazy" decoding="async"/>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Aurelia</div>
@@ -491,8 +490,8 @@
     <!-- Zafarti Brand Video -->
     <div class="wp-grid-item" data-cat="design">
       <div class="wp-grid-thumb has-video">
-        <img src="assets/thumbnails/zafarti.png" alt="Zafarti"/>
-        <video src="assets/videos/zafarti.mp4" muted playsinline loop></video>
+        <img src="assets/thumbnails/zafarti.png" alt="Zafarti" loading="lazy" decoding="async"/>
+        <video src="assets/videos/zafarti.mp4" poster="assets/thumbnails/zafarti.png" muted playsinline loop preload="metadata"></video>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Zafarti</div>
@@ -504,8 +503,8 @@
     <!-- Verra Dev -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb has-video scaled-fill">
-        <img src="assets/thumbnails/verra.png" alt="Verra"/>
-        <video src="assets/videos/verra.mp4" muted playsinline loop></video>
+        <img src="assets/thumbnails/verra.png" alt="Verra" loading="lazy" decoding="async"/>
+        <video src="assets/videos/verra.mp4" poster="assets/thumbnails/verra.png" muted playsinline loop preload="metadata"></video>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Verra</div>
@@ -517,7 +516,7 @@
     <!-- VSolar Dev (Live Autoplay Video Hero) -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb">
-        <img src="assets/thumbnails/vsolar.png" alt="VSolar" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <img src="assets/thumbnails/vsolar.png" alt="VSolar" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
         <div class="wp-grid-iframe-wrap">
           <iframe src="https://vsolar-orpin.vercel.app/" loading="lazy" title="VSolar" scrolling="no"></iframe>
         </div>
@@ -532,7 +531,7 @@
     <!-- FinTrack Dev -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb">
-        <img src="assets/thumbnails/fintrack.png" alt="FinTrack"/>
+        <img src="assets/thumbnails/fintrack.png" alt="FinTrack" loading="lazy" decoding="async"/>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">FinTrack</div>
@@ -544,7 +543,7 @@
     <!-- Jones Built Dev (Live Autoplay Video Hero) -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb">
-        <img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
         <div class="wp-grid-iframe-wrap">
           <iframe src="https://jones-built.vercel.app/" loading="lazy" title="Jones Built" scrolling="no"></iframe>
         </div>
@@ -559,8 +558,8 @@
     <!-- Shoot Like Zak Dev -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb has-video scaled-fill">
-        <img src="assets/thumbnails/shootlikezak.png" alt="Shoot Like Zak"/>
-        <video src="assets/videos/shootlikezak.mp4" muted playsinline loop></video>
+        <img src="assets/thumbnails/shootlikezak.png" alt="Shoot Like Zak" loading="lazy" decoding="async"/>
+        <video src="assets/videos/shootlikezak.mp4" poster="assets/thumbnails/shootlikezak.png" muted playsinline loop preload="metadata"></video>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Shoot Like Zak</div>
@@ -572,7 +571,7 @@
     <!-- Medilink Live Dev -->
     <div class="wp-grid-item" data-cat="development design">
       <div class="wp-grid-thumb">
-        <img src="assets/thumbnails/medilink-live.png" alt="Medilink Live App"/>
+        <img src="assets/thumbnails/medilink-live.png" alt="Medilink Live App" loading="lazy" decoding="async"/>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Medilink — Live</div>
@@ -584,8 +583,8 @@
     <!-- Lensworks Dev -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb has-video scaled-fill">
-        <img src="assets/thumbnails/lensworks.png" alt="Lensworks"/>
-        <video src="assets/videos/lensworks.mp4" muted playsinline loop></video>
+        <img src="assets/thumbnails/lensworks.png" alt="Lensworks" loading="lazy" decoding="async"/>
+        <video src="assets/videos/lensworks.mp4" poster="assets/thumbnails/lensworks.png" muted playsinline loop preload="metadata"></video>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Lensworks</div>
@@ -597,7 +596,7 @@
     <!-- Bloom Digital Dev -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb">
-        <img src="assets/thumbnails/bloom.png" alt="Bloom Digital"/>
+        <img src="assets/thumbnails/bloom.png" alt="Bloom Digital" loading="lazy" decoding="async"/>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Bloom Digital</div>

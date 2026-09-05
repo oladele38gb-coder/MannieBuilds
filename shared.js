@@ -118,15 +118,46 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-/* ── Universal Hover Videos ── */
+/* ── Universal Hover Videos (Instant, Smooth Previews) ── */
 document.querySelectorAll('.work-item, .wp-list-item, .wp-grid-item').forEach(item => {
   const video = item.querySelector('video');
   if (!video) return;
-  item.addEventListener('mouseenter', () => { video.play().catch(() => {}); });
-  item.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+
+  video.preload = 'metadata';
+  let playPromise = null;
+
+  item.addEventListener('mouseenter', () => {
+    playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          item.classList.add('video-active');
+          const thumb = item.querySelector('.wp-grid-thumb, .work-preview, .wp-list-preview');
+          if (thumb) thumb.classList.add('video-active');
+        })
+        .catch(() => {});
+    }
+  });
+
+  item.addEventListener('mouseleave', () => {
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        video.pause();
+        item.classList.remove('video-active');
+        const thumb = item.querySelector('.wp-grid-thumb, .work-preview, .wp-list-preview');
+        if (thumb) thumb.classList.remove('video-active');
+      }).catch(() => {
+        video.pause();
+        item.classList.remove('video-active');
+      });
+    } else {
+      video.pause();
+      item.classList.remove('video-active');
+    }
+  });
 });
 
-/* ── Site Preloader (Editorial Curtain Reveal) ── */
+/* ── Site Preloader (Fast, Snappy Editorial Curtain Reveal) ── */
 function initPreloader() {
   const preloader = document.getElementById('site-preloader');
   const percentEl = document.getElementById('preloader-percent');
@@ -135,28 +166,30 @@ function initPreloader() {
   document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 
-  let current = 0;
-  const startTime = performance.now();
-  const minDuration = 1100;
-  let isWindowLoaded = document.readyState === 'complete';
+  const hasVisited = sessionStorage.getItem('mb_visited') === 'true';
+  const minDuration = hasVisited ? 350 : 650;
+  let isWindowLoaded = document.readyState === 'complete' || document.readyState === 'interactive';
 
   if (!isWindowLoaded) {
     window.addEventListener('load', () => { isWindowLoaded = true; }, { once: true });
-    // Safety fallback: guaranteed to mark loaded after 1.8s so it never stalls
-    setTimeout(() => { isWindowLoaded = true; }, 1800);
+    setTimeout(() => { isWindowLoaded = true; }, hasVisited ? 400 : 900);
   }
+
+  let current = 0;
+  const startTime = performance.now();
 
   function step(now) {
     const elapsed = now - startTime;
     const timeProgress = Math.min(elapsed / minDuration, 1);
     const eased = 1 - Math.pow(1 - timeProgress, 3);
-    current = Math.min(Math.floor(eased * 100), isWindowLoaded ? 100 : 94);
+    current = Math.min(Math.floor(eased * 100), isWindowLoaded ? 100 : 95);
 
     percentEl.textContent = String(current).padStart(2, '0') + '%';
 
     if (current < 100) {
       requestAnimationFrame(step);
     } else {
+      try { sessionStorage.setItem('mb_visited', 'true'); } catch(e) {}
       setTimeout(() => {
         preloader.classList.add('curtain-up');
         document.documentElement.style.overflow = '';
@@ -164,14 +197,14 @@ function initPreloader() {
 
         const heroPhoto = document.querySelector('.hero-photo');
         if (heroPhoto) {
-          heroPhoto.style.transition = 'transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)';
+          heroPhoto.style.transition = 'transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
           heroPhoto.style.transform = 'scale(1)';
         }
 
         setTimeout(() => {
           preloader.style.display = 'none';
-        }, 1100);
-      }, 120);
+        }, 750);
+      }, 70);
     }
   }
 

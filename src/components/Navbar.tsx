@@ -49,7 +49,7 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose, onNav
 
         <div className="flex items-center gap-4">
           <a
-            href="mailto:info@manniebuilds.com"
+            href="mailto:oladele4emmanuel@gmail.com"
             className="hidden sm:inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase border border-neutral-700 px-4 py-2 rounded-full hover:border-orange-500 hover:text-orange-500 transition-colors"
           >
             Let's Talk <ArrowUpRight className="w-3 h-3" />
@@ -137,9 +137,9 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({ isOpen, onClose, onNav
 
             <div className="space-y-1">
               <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">Direct Contact</span>
-              <p className="font-heading font-bold text-xl text-orange-500 hover:underline cursor-pointer">
-                info@manniebuilds.com
-              </p>
+              <a href="mailto:oladele4emmanuel@gmail.com" className="font-heading font-bold text-xl text-orange-500 hover:underline cursor-pointer block">
+                oladele4emmanuel@gmail.com
+              </a>
             </div>
           </div>
         </div>
