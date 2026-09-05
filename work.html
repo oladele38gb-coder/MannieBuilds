@@ -108,7 +108,7 @@
     .wp-grid-link.inert-protected { cursor:default;color:#666;background:#f5f4f0;display:flex;align-items:center;gap:8px;justify-content:flex-start; }
     .wp-grid-link.inert-protected:hover { background:#f5f4f0;color:#666; }
     .wp-grid-link.inert-protected svg { width:13px;height:13px;stroke:#666;stroke-width:2;fill:none;flex-shrink:0; }
-    .thumb-lock-badge { position:absolute;top:14px;right:14px;z-index:6;display:inline-flex;align-items:center;gap:6px;background:rgba(14,14,16,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:500;color:#fff;pointer-events:none; }
+    .thumb-lock-badge { position:absolute;top:10px;right:10px;z-index:10;display:inline-flex;align-items:center;gap:6px;background:rgba(14,14,16,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 14px;font-size:11px;font-weight:500;color:#fff;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.45); }
     .thumb-lock-badge svg { width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2; }
     .crop-top img { object-position:top center !important; }
     #cs-modal-img { transition:opacity .25s cubic-bezier(.16,1,.3,1); }
@@ -599,7 +599,7 @@
       <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
 
-    <!-- 11. Jones Built Dev (Protected Client Details) -->
+    <!-- 11. Jones Built Dev (Autoplay Video Hero with Protected Client Details) -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb">
         <div class="thumb-lock-badge">
@@ -607,6 +607,9 @@
           Protected
         </div>
         <img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <div class="wp-grid-iframe-wrap">
+          <iframe src="https://jones-built.vercel.app/" loading="lazy" title="Jones Built" scrolling="no"></iframe>
+        </div>
       </div>
       <div class="wp-grid-info">
         <div class="wp-grid-title">Jones Built</div>
