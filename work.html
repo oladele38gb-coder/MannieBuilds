@@ -105,6 +105,16 @@
     .wp-grid-link.inert { cursor:default;color:#888;background:#faf9f6; }
     .wp-grid-link.inert:hover { background:#faf9f6;color:#888; }
     .wp-grid-link.inert:hover svg { transform:none; }
+    .wp-grid-link.inert-protected { cursor:default;color:#666;background:#f5f4f0;display:flex;align-items:center;gap:8px;justify-content:flex-start; }
+    .wp-grid-link.inert-protected:hover { background:#f5f4f0;color:#666; }
+    .wp-grid-link.inert-protected svg { width:13px;height:13px;stroke:#666;stroke-width:2;fill:none;flex-shrink:0; }
+    .thumb-lock-badge { position:absolute;top:14px;right:14px;z-index:6;display:inline-flex;align-items:center;gap:6px;background:rgba(14,14,16,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:500;color:#fff;pointer-events:none; }
+    .thumb-lock-badge svg { width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2; }
+    .crop-top img { object-position:top center !important; }
+    #cs-modal-img { transition:opacity .25s cubic-bezier(.16,1,.3,1); }
+    .cs-stage.cs-stage-loading { position:relative;min-height:300px; }
+    .cs-stage.cs-stage-loading::after { content:'';position:absolute;top:50%;left:50%;width:36px;height:36px;margin:-18px 0 0 -18px;border:3px solid rgba(14,14,16,.1);border-top-color:#FF6B00;border-radius:50%;animation:csSpin .7s linear infinite;z-index:10; }
+    @keyframes csSpin { to { transform:rotate(360deg); } }
 
     /* ─── CASE STUDY MODAL (LIGHT MODE CASING) ─── */
     .cs-modal { position:fixed;inset:0;z-index:10000;background:rgba(14,14,16,.5);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.16,1,.3,1);padding:24px 20px; }
@@ -290,44 +300,7 @@
   <!-- ══ LIST VIEW ══ -->
   <ul class="wp-list hidden-view" id="list-view">
 
-    <!-- ── UI/UX DESIGN PROJECTS ── -->
-    <li class="wp-list-item" data-cat="design">
-      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="medilink">
-        <span class="wp-list-title">Medilink Health</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-design.png" alt="Medilink" loading="lazy" decoding="async"/></div>
-        <div class="wp-list-meta">
-          <span class="wp-list-tag">Design + Dev</span>
-          <span class="wp-list-cat">Case Study</span>
-          <span class="wp-list-year">2025</span>
-          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
-        </div>
-      </a>
-    </li>
-
-    <li class="wp-list-item" data-cat="design">
-      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="christ-arsenal">
-        <span class="wp-list-title">Christ Arsenal</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal" loading="lazy" decoding="async"/></div>
-        <div class="wp-list-meta">
-          <span class="wp-list-cat">UI/UX Design</span>
-          <span class="wp-list-year">2025</span>
-          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
-        </div>
-      </a>
-    </li>
-
-    <li class="wp-list-item" data-cat="design">
-      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="aurelia">
-        <span class="wp-list-title">Aurelia</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/aurelia.png" alt="Aurelia" loading="lazy" decoding="async"/></div>
-        <div class="wp-list-meta">
-          <span class="wp-list-cat">Case Study</span>
-          <span class="wp-list-year">2025</span>
-          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
-        </div>
-      </a>
-    </li>
-
+    <!-- 1. Zafarti -->
     <li class="wp-list-item" data-cat="design">
       <a href="javascript:void(0)" class="wp-list-link inert-link" style="cursor:default;" onclick="return false;">
         <span class="wp-list-title">Zafarti</span>
@@ -342,7 +315,7 @@
       </a>
     </li>
 
-    <!-- ── DEVELOPMENT PROJECTS ── -->
+    <!-- 2. Verra -->
     <li class="wp-list-item" data-cat="development">
       <a href="https://verra-psi.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Verra</span>
@@ -357,69 +330,34 @@
       </a>
     </li>
 
-    <li class="wp-list-item" data-cat="development">
-      <a href="https://vsolar-orpin.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
-        <span class="wp-list-title">VSolar</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/vsolar.png" alt="VSolar" loading="lazy" decoding="async"/></div>
-        <div class="wp-list-meta">
-          <span class="wp-list-cat">Web Development</span>
-          <span class="wp-list-year">2025</span>
-          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
-        </div>
-      </a>
-    </li>
-
-    <li class="wp-list-item" data-cat="development">
-      <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
-        <span class="wp-list-title">FinTrack</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/fintrack.png" alt="FinTrack" loading="lazy" decoding="async"/></div>
-        <div class="wp-list-meta">
-          <span class="wp-list-cat">Web Development</span>
-          <span class="wp-list-year">2025</span>
-          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
-        </div>
-      </a>
-    </li>
-
-    <li class="wp-list-item" data-cat="development">
-      <a href="https://jones-built.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
-        <span class="wp-list-title">Jones Built</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" loading="lazy" decoding="async"/></div>
-        <div class="wp-list-meta">
-          <span class="wp-list-cat">Web Development</span>
-          <span class="wp-list-year">2025</span>
-          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
-        </div>
-      </a>
-    </li>
-
-    <li class="wp-list-item" data-cat="development">
-      <a href="https://shootlikezak.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
-        <span class="wp-list-title">Shoot Like Zak</span>
-        <div class="wp-list-preview scaled-fill">
-          <video src="assets/videos/shootlikezak.mp4" poster="assets/thumbnails/shootlikezak.png" muted playsinline loop preload="metadata"></video>
-        </div>
-        <div class="wp-list-meta">
-          <span class="wp-list-cat">Web Development</span>
-          <span class="wp-list-year">2025</span>
-          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
-        </div>
-      </a>
-    </li>
-
-    <li class="wp-list-item" data-cat="development design">
-      <a href="https://medilink-blond-eight.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
-        <span class="wp-list-title">Medilink — Live</span>
-        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-live.png" alt="Medilink Live" loading="lazy" decoding="async"/></div>
+    <!-- 3. Medilink Health -->
+    <li class="wp-list-item" data-cat="design">
+      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="medilink">
+        <span class="wp-list-title">Medilink Health</span>
+        <div class="wp-list-preview crop-top"><img src="assets/thumbnails/medilink-hero.png" alt="Medilink" loading="lazy" decoding="async"/></div>
         <div class="wp-list-meta">
           <span class="wp-list-tag">Design + Dev</span>
-          <span class="wp-list-cat">Full Product</span>
+          <span class="wp-list-cat">Case Study</span>
           <span class="wp-list-year">2025</span>
           <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
         </div>
       </a>
     </li>
 
+    <!-- 4. Aurelia -->
+    <li class="wp-list-item" data-cat="design">
+      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="aurelia">
+        <span class="wp-list-title">Aurelia</span>
+        <div class="wp-list-preview crop-top"><img src="assets/thumbnails/aurelia-hero.png" alt="Aurelia" loading="lazy" decoding="async"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Case Study</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <!-- 5. Lensworks -->
     <li class="wp-list-item" data-cat="development">
       <a href="https://lensworks-mauve.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Lensworks</span>
@@ -434,6 +372,89 @@
       </a>
     </li>
 
+    <!-- 6. Shoot Like Zak -->
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://shootlikezak.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Shoot Like Zak</span>
+        <div class="wp-list-preview scaled-fill">
+          <video src="assets/videos/shootlikezak.mp4" poster="assets/thumbnails/shootlikezak.png" muted playsinline loop preload="metadata"></video>
+        </div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <!-- 7. Christ Arsenal -->
+    <li class="wp-list-item" data-cat="design">
+      <a href="javascript:void(0)" class="wp-list-link cs-trigger" data-cs="christ-arsenal">
+        <span class="wp-list-title">Christ Arsenal</span>
+        <div class="wp-list-preview crop-top"><img src="assets/thumbnails/christ-arsenal-hero.png" alt="Christ Arsenal" loading="lazy" decoding="async"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">UI/UX Design</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <!-- 8. VSolar -->
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://vsolar-orpin.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">VSolar</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/vsolar.png" alt="VSolar" loading="lazy" decoding="async"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <!-- 9. Medilink — Live -->
+    <li class="wp-list-item" data-cat="development design">
+      <a href="https://medilink-blond-eight.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">Medilink — Live</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/medilink-live.png" alt="Medilink Live" loading="lazy" decoding="async"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-tag">Design + Dev</span>
+          <span class="wp-list-cat">Full Product</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <!-- 10. FinTrack -->
+    <li class="wp-list-item" data-cat="development">
+      <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
+        <span class="wp-list-title">FinTrack</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/fintrack.png" alt="FinTrack" loading="lazy" decoding="async"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+        </div>
+      </a>
+    </li>
+
+    <!-- 11. Jones Built (Protected) -->
+    <li class="wp-list-item" data-cat="development">
+      <div class="wp-list-link inert-link" style="cursor:default;">
+        <span class="wp-list-title">Jones Built</span>
+        <div class="wp-list-preview"><img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" loading="lazy" decoding="async"/></div>
+        <div class="wp-list-meta">
+          <span class="wp-list-tag" style="background:rgba(14,14,16,.08);color:#555;border-color:rgba(14,14,16,.15);">Protected</span>
+          <span class="wp-list-cat">Web Development</span>
+          <span class="wp-list-year">2025</span>
+          <span class="wp-list-arrow" title="Client information protected"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+        </div>
+      </div>
+    </li>
+
+    <!-- 12. Bloom Digital -->
     <li class="wp-list-item" data-cat="development">
       <a href="https://bloom-digital-two.vercel.app/" target="_blank" rel="noreferrer" class="wp-list-link">
         <span class="wp-list-title">Bloom Digital</span>
@@ -451,43 +472,7 @@
   <!-- ══ GRID VIEW ══ -->
   <div class="wp-grid" id="grid-view">
 
-    <!-- Medilink Health UI/UX -->
-    <div class="wp-grid-item" data-cat="design">
-      <div class="wp-grid-thumb cs-trigger" data-cs="medilink" style="cursor:pointer;">
-        <img src="assets/thumbnails/medilink-design.png" alt="Medilink Health Design" loading="lazy" decoding="async"/>
-      </div>
-      <div class="wp-grid-info">
-        <div class="wp-grid-title">Medilink Health</div>
-        <div class="wp-grid-meta"><span class="wp-grid-cat">UI/UX · Case Study</span><span class="wp-grid-year">2025</span></div>
-      </div>
-      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="medilink">View Case Study <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-
-    <!-- Christ Arsenal UI/UX -->
-    <div class="wp-grid-item" data-cat="design">
-      <div class="wp-grid-thumb cs-trigger" data-cs="christ-arsenal" style="cursor:pointer;">
-        <img src="assets/thumbnails/christ-arsenal.png" alt="Christ Arsenal Design" loading="lazy" decoding="async"/>
-      </div>
-      <div class="wp-grid-info">
-        <div class="wp-grid-title">Christ Arsenal</div>
-        <div class="wp-grid-meta"><span class="wp-grid-cat">UI/UX Design</span><span class="wp-grid-year">2025</span></div>
-      </div>
-      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="christ-arsenal">View Design <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-
-    <!-- Aurelia UI/UX -->
-    <div class="wp-grid-item" data-cat="design">
-      <div class="wp-grid-thumb cs-trigger" data-cs="aurelia" style="cursor:pointer;">
-        <img src="assets/thumbnails/aurelia.png" alt="Aurelia Email Design" loading="lazy" decoding="async"/>
-      </div>
-      <div class="wp-grid-info">
-        <div class="wp-grid-title">Aurelia</div>
-        <div class="wp-grid-meta"><span class="wp-grid-cat">Email Design · Case Study</span><span class="wp-grid-year">2025</span></div>
-      </div>
-      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="aurelia">View Case Study <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-
-    <!-- Zafarti Brand Video -->
+    <!-- 1. Zafarti Brand Video -->
     <div class="wp-grid-item" data-cat="design">
       <div class="wp-grid-thumb has-video">
         <img src="assets/thumbnails/zafarti.png" alt="Zafarti" loading="lazy" decoding="async"/>
@@ -500,7 +485,7 @@
       <span class="wp-grid-link inert">Hover to preview reel <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg></span>
     </div>
 
-    <!-- Verra Dev -->
+    <!-- 2. Verra Dev -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb has-video scaled-fill">
         <img src="assets/thumbnails/verra.png" alt="Verra" loading="lazy" decoding="async"/>
@@ -513,7 +498,69 @@
       <a href="https://verra-psi.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
 
-    <!-- VSolar Dev (Live Autoplay Video Hero) -->
+    <!-- 3. Medilink Health UI/UX -->
+    <div class="wp-grid-item" data-cat="design">
+      <div class="wp-grid-thumb cs-trigger crop-top" data-cs="medilink" style="cursor:pointer;">
+        <img src="assets/thumbnails/medilink-hero.png" alt="Medilink Health Design" loading="lazy" decoding="async"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Medilink Health</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">UI/UX · Case Study</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="medilink">View Case Study <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- 4. Aurelia UI/UX -->
+    <div class="wp-grid-item" data-cat="design">
+      <div class="wp-grid-thumb cs-trigger crop-top" data-cs="aurelia" style="cursor:pointer;">
+        <img src="assets/thumbnails/aurelia-hero.png" alt="Aurelia Email Design" loading="lazy" decoding="async"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Aurelia</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Email Design · Case Study</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="aurelia">View Case Study <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- 5. Lensworks Dev -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb has-video scaled-fill">
+        <img src="assets/thumbnails/lensworks.png" alt="Lensworks" loading="lazy" decoding="async"/>
+        <video src="assets/videos/lensworks.mp4" poster="assets/thumbnails/lensworks.png" muted playsinline loop preload="metadata"></video>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Lensworks</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://lensworks-mauve.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- 6. Shoot Like Zak Dev -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb has-video scaled-fill">
+        <img src="assets/thumbnails/shootlikezak.png" alt="Shoot Like Zak" loading="lazy" decoding="async"/>
+        <video src="assets/videos/shootlikezak.mp4" poster="assets/thumbnails/shootlikezak.png" muted playsinline loop preload="metadata"></video>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Shoot Like Zak</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="https://shootlikezak.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- 7. Christ Arsenal UI/UX -->
+    <div class="wp-grid-item" data-cat="design">
+      <div class="wp-grid-thumb cs-trigger crop-top" data-cs="christ-arsenal" style="cursor:pointer;">
+        <img src="assets/thumbnails/christ-arsenal-hero.png" alt="Christ Arsenal Design" loading="lazy" decoding="async"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Christ Arsenal</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">UI/UX Design</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <a href="javascript:void(0)" class="wp-grid-link cs-trigger" data-cs="christ-arsenal">View Design <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- 8. VSolar Dev (Live Autoplay Video Hero) -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb">
         <img src="assets/thumbnails/vsolar.png" alt="VSolar" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
@@ -528,47 +575,7 @@
       <a href="https://vsolar-orpin.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
 
-    <!-- FinTrack Dev -->
-    <div class="wp-grid-item" data-cat="development">
-      <div class="wp-grid-thumb">
-        <img src="assets/thumbnails/fintrack.png" alt="FinTrack" loading="lazy" decoding="async"/>
-      </div>
-      <div class="wp-grid-info">
-        <div class="wp-grid-title">FinTrack</div>
-        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
-      </div>
-      <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-
-    <!-- Jones Built Dev (Live Autoplay Video Hero) -->
-    <div class="wp-grid-item" data-cat="development">
-      <div class="wp-grid-thumb">
-        <img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
-        <div class="wp-grid-iframe-wrap">
-          <iframe src="https://jones-built.vercel.app/" loading="lazy" title="Jones Built" scrolling="no"></iframe>
-        </div>
-      </div>
-      <div class="wp-grid-info">
-        <div class="wp-grid-title">Jones Built</div>
-        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
-      </div>
-      <a href="https://jones-built.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-
-    <!-- Shoot Like Zak Dev -->
-    <div class="wp-grid-item" data-cat="development">
-      <div class="wp-grid-thumb has-video scaled-fill">
-        <img src="assets/thumbnails/shootlikezak.png" alt="Shoot Like Zak" loading="lazy" decoding="async"/>
-        <video src="assets/videos/shootlikezak.mp4" poster="assets/thumbnails/shootlikezak.png" muted playsinline loop preload="metadata"></video>
-      </div>
-      <div class="wp-grid-info">
-        <div class="wp-grid-title">Shoot Like Zak</div>
-        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
-      </div>
-      <a href="https://shootlikezak.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-
-    <!-- Medilink Live Dev -->
+    <!-- 9. Medilink Live Dev -->
     <div class="wp-grid-item" data-cat="development design">
       <div class="wp-grid-thumb">
         <img src="assets/thumbnails/medilink-live.png" alt="Medilink Live App" loading="lazy" decoding="async"/>
@@ -580,20 +587,38 @@
       <a href="https://medilink-blond-eight.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
 
-    <!-- Lensworks Dev -->
+    <!-- 10. FinTrack Dev -->
     <div class="wp-grid-item" data-cat="development">
-      <div class="wp-grid-thumb has-video scaled-fill">
-        <img src="assets/thumbnails/lensworks.png" alt="Lensworks" loading="lazy" decoding="async"/>
-        <video src="assets/videos/lensworks.mp4" poster="assets/thumbnails/lensworks.png" muted playsinline loop preload="metadata"></video>
+      <div class="wp-grid-thumb">
+        <img src="assets/thumbnails/fintrack.png" alt="FinTrack" loading="lazy" decoding="async"/>
       </div>
       <div class="wp-grid-info">
-        <div class="wp-grid-title">Lensworks</div>
+        <div class="wp-grid-title">FinTrack</div>
         <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
       </div>
-      <a href="https://lensworks-mauve.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="https://fintrack-xi-six.vercel.app/" target="_blank" rel="noreferrer" class="wp-grid-link">View live site <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
 
-    <!-- Bloom Digital Dev -->
+    <!-- 11. Jones Built Dev (Protected Client Details) -->
+    <div class="wp-grid-item" data-cat="development">
+      <div class="wp-grid-thumb">
+        <div class="thumb-lock-badge">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Protected
+        </div>
+        <img src="assets/thumbnails/jonesbuilt.png" alt="Jones Built" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+      </div>
+      <div class="wp-grid-info">
+        <div class="wp-grid-title">Jones Built</div>
+        <div class="wp-grid-meta"><span class="wp-grid-cat">Web Development</span><span class="wp-grid-year">2025</span></div>
+      </div>
+      <span class="wp-grid-link inert-protected">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Client information protected
+      </span>
+    </div>
+
+    <!-- 12. Bloom Digital Dev -->
     <div class="wp-grid-item" data-cat="development">
       <div class="wp-grid-thumb">
         <img src="assets/thumbnails/bloom.png" alt="Bloom Digital" loading="lazy" decoding="async"/>
@@ -842,10 +867,9 @@
     const cs = caseStudies[key];
     if(!cs || !csModal) return;
 
+    csModal.dataset.activeCs = key;
     csTitle.textContent     = cs.title;
     csBadge.textContent     = cs.badge;
-    csImg.src               = cs.image;
-    csImg.alt               = cs.title + ' Design Preview';
     csOverview.textContent  = cs.overview;
     csChallenge.textContent = cs.challenge;
     csSolution.textContent  = cs.solution;
@@ -853,6 +877,27 @@
     csTimeline.textContent  = cs.timeline;
     csTools.textContent     = cs.tools;
     csHighlights.textContent= cs.highlights;
+
+    // Smooth loading state to prevent flashing previous case study image
+    csImg.style.opacity = '0';
+    csStage.classList.add('cs-stage-loading');
+
+    const tempImg = new Image();
+    tempImg.src = cs.image;
+    tempImg.onload = () => {
+      if (csModal.dataset.activeCs === key) {
+        csImg.src = cs.image;
+        csImg.alt = cs.title + ' Design Preview';
+        csImg.style.opacity = '1';
+        csStage.classList.remove('cs-stage-loading');
+      }
+    };
+    if (tempImg.complete) {
+      csImg.src = cs.image;
+      csImg.alt = cs.title + ' Design Preview';
+      csImg.style.opacity = '1';
+      csStage.classList.remove('cs-stage-loading');
+    }
 
     csStage.scrollTop = 0;
     csStage.classList.remove('is-zoomed');
@@ -888,7 +933,15 @@
     if(!csModal) return;
     csModal.classList.remove('open');
     csModal.setAttribute('aria-hidden', 'true');
+    csModal.dataset.activeCs = '';
     document.body.style.overflow = '';
+    setTimeout(() => {
+      if (!csModal.classList.contains('open')) {
+        csImg.src = '';
+        csImg.style.opacity = '0';
+        csStage.classList.remove('cs-stage-loading');
+      }
+    }, 280);
   }
 
   function toggleZoom() {

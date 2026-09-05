@@ -13,6 +13,28 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <style>
     html, body, body.about-page { background: #0e0e10 !important; color: #fff !important; }
+    /* Right navbar items contrast against photo on About page */
+    body.about-page:not(.menu-open) .site-nav .nav-right .nav-talk {
+      color: #0e0e10 !important;
+      background: rgba(0, 0, 0, 0.08) !important;
+      border: 1px solid rgba(0, 0, 0, 0.2) !important;
+      font-weight: 500 !important;
+    }
+    body.about-page:not(.menu-open) .site-nav .nav-right .nav-talk:hover {
+      background: rgba(0, 0, 0, 0.16) !important;
+    }
+    body.about-page:not(.menu-open) .site-nav .nav-right .nav-menu-label {
+      color: #0e0e10 !important;
+      font-weight: 500 !important;
+    }
+    body.about-page:not(.menu-open) .site-nav .nav-right .nav-toggle {
+      background: rgba(0, 0, 0, 0.08) !important;
+      border: 1px solid rgba(0, 0, 0, 0.22) !important;
+    }
+    body.about-page:not(.menu-open) .site-nav .nav-right .nav-toggle svg line,
+    body.about-page:not(.menu-open) .site-nav .nav-right .nav-toggle svg path {
+      stroke: #0e0e10 !important;
+    }
     /* ── About hero ── */
     .about-hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; background: #0e0e10; }
     .about-hero-left { padding: 120px 48px 80px; display: flex; flex-direction: column; justify-content: flex-end; background: #0e0e10; }
